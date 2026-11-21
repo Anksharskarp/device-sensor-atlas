@@ -26,7 +26,7 @@ export function GyroscopeScreen() {
         if (lab.collecting) lab.stop();
       }
     }
-    update(AppState.currentState);
+    if (AppState.currentState) update(AppState.currentState);
     const listener = AppState.addEventListener("change", update);
     return () => {
       listener.remove();
