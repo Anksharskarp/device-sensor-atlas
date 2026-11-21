@@ -42,3 +42,42 @@ footer span { color: var(--muted); }
   .frame { border-inline: 0; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+.instrument-wrap { margin-inline: auto; padding: 0 var(--gutter) var(--section); }
+.instrument { background: var(--surface); border: 1px solid var(--line); border-radius: .4rem; overflow: hidden; box-shadow: 0 12px 32px -18px #0003; }
+.instrument-head, .instrument-foot { display: flex; justify-content: space-between; align-items: center; padding: .75rem 1.15rem; background: var(--inset); }
+.instrument-head { border-bottom: 1px solid var(--line); }
+.instrument-head > div { display: flex; align-items: center; gap: .65rem; }
+.scope-icon { font: 1.65rem/1 var(--mono); }
+.instrument-head h2 { font: 600 1rem var(--sans); letter-spacing: -.03em; }
+.instrument-head > span, .instrument-foot, .demo-hint, .axis-name, .x-ticks, .y-ticks { color: var(--muted); font: .81rem/1.4 var(--mono); }
+.instrument-body { display: grid; grid-template-columns: minmax(0, 1fr) 15rem; }
+.scope { min-width: 0; padding: 1.35rem clamp(.75rem, 2vw, 1.6rem) .9rem; }
+.scope figcaption, .inspector h3 { font: 500 .9rem var(--mono); letter-spacing: -.03em; }
+.scope figcaption span { color: var(--muted); }
+.graph { display: grid; grid-template-columns: 2.7rem 1fr; row-gap: .38rem; margin-top: 1.45rem; }
+#trace { width: 100%; height: clamp(10rem, 18vw, 14rem); cursor: crosshair; touch-action: pan-y; overflow: visible; }
+#trace line, #trace polyline { vector-effect: non-scaling-stroke; }
+#trace .minor { stroke: var(--inset); }
+#trace .major { stroke: var(--line); }
+#trace .signal { stroke: var(--trace); stroke-width: 2.2; fill: none; }
+#trace [data-cursor] { stroke: var(--ink); fill: var(--surface); stroke-width: 1.4; }
+#trace [data-cursor] line { stroke-dasharray: 4 4; }
+.y-ticks, .x-ticks { display: flex; justify-content: space-between; }
+.y-ticks { flex-direction: column; text-align: right; padding-right: .6rem; margin-block: -.45rem; }
+.x-ticks { grid-column: 2; }
+.axis-name { text-align: center; padding-left: 2.7rem; margin-top: .35rem; }
+.inspector { border-left: 1px solid var(--line); padding: 1.4rem; }
+.reading { margin: .35rem 0 1.4rem; font: 500 clamp(2.2rem, 3.3vw, 3rem)/1.15 var(--sans); letter-spacing: -.065em; font-variant-numeric: tabular-nums; }
+.reading span { font-size: .52em; color: var(--muted); }
+.cursor-controls { display: grid; gap: .85rem; }
+.cursor-input { display: grid; grid-template-columns: 1fr auto; gap: .3rem; font: .875rem/1.4 var(--mono); }
+.cursor-input output { color: var(--muted); }
+.cursor-input input { grid-column: 1/-1; width: 100%; margin: 0; min-height: 1.45rem; accent-color: var(--ink); cursor: pointer; }
+.instrument-foot { border-top: 1px solid var(--line); }
+.demo-hint { margin-top: .85rem; text-align: center; }
+@media (max-width: 48rem) {
+  .instrument-body { grid-template-columns: 1fr; }
+  .inspector { display: grid; grid-template-columns: 1fr minmax(9rem, 1fr); align-items: center; gap: .3rem 1rem; border-left: 0; border-top: 1px solid var(--line); }
+  .reading { grid-column: 1; margin: 0; }
+  .cursor-controls { grid-area: 1/2/3/3; }
+}
