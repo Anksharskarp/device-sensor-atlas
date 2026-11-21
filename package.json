@@ -1,0 +1,17 @@
+{
+  "name": "device-sensor-atlas",
+  "private": true,
+  "author": "William Zhang",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "npm run build -w @sensor-atlas/core && npm run build -w @sensor-atlas/react-native",
+    "test": "npm run build -w @sensor-atlas/core && node --test packages/core/test/*.test.mjs",
+    "site": "npm run build -w @sensor-atlas/core && node site/build.mjs"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3"
+  }
+}
