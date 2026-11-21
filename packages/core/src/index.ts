@@ -1,1 +1,3 @@
 export type { Channel, Channels, Sample, Reading, Run } from "./types.js";
+export { createInstrument } from "./instrument.js";
+export type { Instrument, InstrumentOptions } from "./instrument.js";
