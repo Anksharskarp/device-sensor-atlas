@@ -12,6 +12,7 @@
     "site": "npm run build -w @sensor-atlas/core && node site/build.mjs"
   },
   "devDependencies": {
+    "marked": "18.2.1",
     "typescript": "5.9.3"
   }
 }
