@@ -1,0 +1,22 @@
+{
+  "expo": {
+    "name": "Pocket Lab",
+    "slug": "sensor-atlas-pocket-lab",
+    "version": "0.1.0",
+    "userInterfaceStyle": "light",
+    "plugins": [
+      [
+        "expo-sensors",
+        {
+          "motionPermission": "Allow Pocket Lab to measure rotation with the gyroscope."
+        }
+      ]
+    ],
+    "ios": {
+      "bundleIdentifier": "org.sensoratlas.pocketlab"
+    },
+    "android": {
+      "package": "org.sensoratlas.pocketlab"
+    }
+  }
+}
