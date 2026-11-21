@@ -1,0 +1,43 @@
+{
+  "name": "@sensor-atlas/react-native",
+  "version": "0.1.0-alpha.0",
+  "description": "A React Native panel for collecting and inspecting sensor data.",
+  "author": "William Zhang",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Anksharskarp/device-sensor-atlas.git",
+    "directory": "packages/react-native"
+  },
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "prepack": "npm run build"
+  },
+  "peerDependencies": {
+    "@sensor-atlas/core": "0.1.0-alpha.0",
+    "react": "^19.3.0",
+    "react-native": "^0.88.1",
+    "react-native-svg": "^15.16.0"
+  },
+  "devDependencies": {
+    "@types/react": "~19.3.0",
+    "react": "19.3.0",
+    "react-native": "0.88.1",
+    "react-native-svg": "15.16.0"
+  }
+}
