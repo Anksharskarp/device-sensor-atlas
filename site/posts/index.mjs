@@ -1,0 +1,31 @@
+export const posts = [
+  {
+    slug: 'ten-swings',
+    title: 'Ten swings, one measurement',
+    description: 'A pendulum gives the first instrument a question with an answer you can check by hand.',
+    date: '2026-11-21',
+  },
+  {
+    slug: 'between-two-samples',
+    title: 'What lives between two samples?',
+    description: 'Three readings show why sample count and time coverage belong beside an average.',
+    date: '2026-11-21',
+  },
+  {
+    slug: 'a-clock-for-each-source',
+    title: 'A clock for each source',
+    description: 'A sensor reading carries two pieces of information. Its clock tells you how to use the second.',
+    date: '2026-11-21',
+  },
+];
+
+export function postDate(date) {
+  return new Intl.DateTimeFormat('en-US', {
+    month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC',
+  }).format(new Date(date + 'T12:00:00Z'));
+}
+
+export function postList(prefix) {
+  return '<ul class="post-list">' + posts.map(post => `<li><a href="${prefix}${post.slug}/">
+<time datetime="${post.date}">${postDate(post.date)}</time><div><h3>${post.title}</h3><p>${post.description}</p></div></a></li>`).join('') + '</ul>';
+}
