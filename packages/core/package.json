@@ -1,0 +1,31 @@
+{
+  "name": "@sensor-atlas/core",
+  "version": "0.1.0-alpha.0",
+  "description": "Capture and measure timestamped sensor readings.",
+  "author": "William Zhang",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Anksharskarp/device-sensor-atlas.git",
+    "directory": "packages/core"
+  },
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "prepack": "npm run build"
+  }
+}
