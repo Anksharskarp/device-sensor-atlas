@@ -16,20 +16,22 @@ export function TimeCursor({ label, reading, unit, selected, onSelect }: {
 function CursorSelection({ trace, unit }: { trace: readonly Reading[]; unit: string }) {
   const first = trace[0];
   const last = trace[trace.length - 1];
-  const [a, setA] = useState(first);
-  const [b, setB] = useState(last);
+  const [aIndex, setA] = useState(0);
+  const [bIndex, setB] = useState(Infinity);
+  const a = trace[Math.min(aIndex, trace.length - 1)];
+  const b = trace[Math.min(bIndex, trace.length - 1)];
   const [active, select] = useState<"A" | "B">("A");
   const current = active === "A" ? a : b;
   const move = active === "A" ? setA : setB;
   const stats = useMemo(() => measureInterval(trace, first.segment, a.t, b.t)!, [trace, first.segment, a, b]);
   function step(direction: number) {
     const index = Math.max(0, Math.min(trace.length - 1, trace.indexOf(current) + direction));
-    move(trace[index]);
+    move(index);
   }
   return (
     <View style={layout.stack}>
       <TracePlot readings={trace} segment={first.segment} start={first.t} end={last.t === first.t ? first.t + 1 : last.t}
-        unit={unit} cursors={[a.t, b.t]} onCursor={t => move(nearestSample(trace, first.segment, t)!)} />
+        unit={unit} cursors={[a.t, b.t]} onCursor={t => move(trace.indexOf(nearestSample(trace, first.segment, t)!))} />
       <Text style={layout.label}>Select a cursor, then drag it on the plot.</Text>
       <View style={layout.row}>
         <TimeCursor label="A" reading={a} unit={unit} selected={active === "A"} onSelect={() => select("A")} />
