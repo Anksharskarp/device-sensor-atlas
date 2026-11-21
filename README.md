@@ -25,19 +25,28 @@ After collection, tap **Save run**. Under **Saved runs**, open the recording to 
 Create one instrument per experiment screen. Pass source timestamps in seconds and values in the declared unit.
 
 ```tsx
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createInstrument } from "@sensor-atlas/core";
 import { InstrumentPanel } from "@sensor-atlas/react-native";
 
-export function Experiment() {
+type Subscribe = (onSample: (seconds: number, radiansPerSecond: number) => void) => () => void;
+
+export function Experiment({ subscribe }: { subscribe: Subscribe }) {
   const [lab] = useState(() => createInstrument({
     channels: {
       rotation: { quantity: "angularVelocity", unit: "rad/s", clock: "phone" },
     },
   }));
 
-  // In your source callback:
-  // lab.write("rotation", { t: timestampSeconds, value: radiansPerSecond });
+  useEffect(() => {
+    const unsubscribe = subscribe((t, value) => lab.write("rotation", { t, value }));
+    return () => {
+      unsubscribe();
+      lab.gap("rotation");
+      if (lab.collecting) lab.stop();
+    };
+  }, [lab, subscribe]);
+
   return <InstrumentPanel instrument={lab} runName="Short pendulum" />;
 }
 ```
