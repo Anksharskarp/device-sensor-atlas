@@ -9,7 +9,7 @@ export function home(run) {
 <p class="lead">Record a sensor, inspect its trace, and measure what happened. Bring the same instrument into your own app.</p>
 <div class="actions"><a class="button primary" href="docs/">Get started</a><a class="button" href="#experiment">Try the pendulum</a></div>
 </section>
-${instrument(run.samples.rotation)}
+${instrument(run)}
 <section class="section embed"><div>
 <p class="eyebrow">The SDK</p><h2>Bring your own sensor.</h2>
 <p>Feed a timestamp and a value from your sensor callback. The instrument keeps the readings and gives your app a meter, a plot, and collection controls.</p>
