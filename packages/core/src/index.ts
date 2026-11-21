@@ -3,3 +3,4 @@ export { createInstrument } from "./instrument.js";
 export type { Instrument, InstrumentOptions } from "./instrument.js";
 export { createPendulumRun } from "./pendulum.js";
 export { nearestSample, measureInterval } from "./measure.js";
+export { traceEnvelope } from "./envelope.js";
