@@ -16,10 +16,12 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
-    }
+    },
+    "./schema/run-v1.json": "./schema/run-v1.json"
   },
   "files": [
-    "dist"
+    "dist",
+    "schema"
   ],
   "publishConfig": {
     "access": "public"

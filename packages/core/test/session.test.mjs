@@ -25,3 +25,11 @@ test("the reader validates segments, clocks and the channel map", () => {
     assert.throws(() => parseRun(JSON.stringify(run)));
   }
 });
+
+test("the v1 reader accepts a recording that begins mid-segment", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const json = await readFile(new URL("./fixtures/reset-v1.json", import.meta.url), "utf8");
+  const run = parseRun(json);
+  assert.deepEqual(run.samples.voltage.map(s => s.segment), [1, 2]);
+  assert.deepEqual(run.samples.current, []);
+});

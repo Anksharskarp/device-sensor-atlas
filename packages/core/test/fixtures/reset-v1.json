@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "name": "Board restart",
+  "channels": {
+    "voltage": { "quantity": "voltage", "unit": "V", "clock": "board" },
+    "current": { "quantity": "current", "unit": "A", "clock": "phone", "timestampKind": "receipt" }
+  },
+  "samples": {
+    "voltage": [
+      { "t": 51.25, "value": 3.3, "segment": 1 },
+      { "t": 0, "value": 0, "segment": 2 }
+    ],
+    "current": []
+  }
+}

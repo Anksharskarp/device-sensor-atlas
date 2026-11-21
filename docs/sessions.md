@@ -19,6 +19,8 @@ A v1 run is a UTF-8 JSON object with a name, channel descriptions and a sample a
 }
 ```
 
+The [v1 JSON Schema](../packages/core/schema/run-v1.json) ships with the core package. The reader also checks channel key equality and timestamp ordering. A [reader fixture](../packages/core/test/fixtures/reset-v1.json) includes a clock reset and an empty channel.
+
 ## Capture
 
 `lab.start("Short pendulum")` begins a manual run. Pass a second argument in seconds for a timed run. `lab.stop()` returns the completed run. After a timer or sample limit ends a run, read `lab.lastRun` and `lab.endedBy`. Timers run on the foreground JavaScript event loop.
