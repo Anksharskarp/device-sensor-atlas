@@ -25,6 +25,7 @@ export function createInstrument<K extends string>(options: InstrumentOptions<K>
   }))) as Readonly<Record<K, Channel>>;
 
   let capture: Record<K, Reading[]> | undefined;
+  let revision = 0;
   let count = 0;
   let name = "";
   let lastRun: Run<K> | undefined;
@@ -38,6 +39,7 @@ export function createInstrument<K extends string>(options: InstrumentOptions<K>
     lastRun = Object.freeze({ version: 1, name, channels, samples: Object.freeze(capture) });
     capture = undefined;
     endedBy = reason;
+    revision++;
     return lastRun;
   }
 
@@ -52,6 +54,7 @@ export function createInstrument<K extends string>(options: InstrumentOptions<K>
     capture = Object.fromEntries(keys.map(k => [k, [] as Reading[]])) as Record<K, Reading[]>;
     count = 0;
     endedBy = undefined;
+    revision++;
     if (durationSeconds !== undefined) timer = setTimeout(() => finish("timer"), durationSeconds * 1000);
   }
 
@@ -76,6 +79,7 @@ export function createInstrument<K extends string>(options: InstrumentOptions<K>
         if (++count === captureLimit) finish("limit");
       }
     }
+    if (samples.length) revision++;
     return accepted;
   }
 
@@ -83,12 +87,16 @@ export function createInstrument<K extends string>(options: InstrumentOptions<K>
     channels,
     start,
     stop: () => finish("manual"),
+    get revision() { return revision; },
     get collecting() { return capture !== undefined; },
     get lastRun() { return lastRun; },
     get endedBy() { return endedBy; },
     writeBatch,
     write: (key: K, sample: Sample) => writeBatch(key, [sample]) === 1,
-    gap: (key: K) => channelSeries(key).gap(),
+    gap(key: K) {
+      channelSeries(key).gap();
+      revision++;
+    },
     readings: (key: K) => channelSeries(key).readings(),
     diagnostics: (key: K) => channelSeries(key).diagnostics(),
     dispose() {
