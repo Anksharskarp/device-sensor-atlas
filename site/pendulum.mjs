@@ -14,7 +14,7 @@ export function instrument(samples) {
   const horizontals = [...Array(9)].map((_, i) => `<line x1="0" x2="${width}" y1="${height * i / 8}" y2="${height * i / 8}" class="${i === 4 ? 'major' : 'minor'}"/>`).join('');
   const defaults = [Math.round((samples.length - 1) / 10), Math.round((samples.length - 1) * .8)];
   const cursorLines = defaults.map((i, k) => `<g data-cursor="${k}"><line x1="${x(samples[i].t)}" x2="${x(samples[i].t)}" y1="0" y2="${height}"/><circle cx="${x(samples[i].t)}" cy="${y(samples[i].value)}" r="4.5"/></g>`).join('');
-  const inputs = defaults.map((i, k) => `<label class="cursor-input"><span>Cursor ${k ? 'B' : 'A'}</span><output for="cursor-${k}">${(samples[i].t).toFixed(2)} s</output><input id="cursor-${k}" type="range" min="0" max="${samples.length - 1}" value="${i}" step="1"></label>`).join('');
+  const inputs = defaults.map((i, k) => `<label class="cursor-input" for="cursor-${k}"><span>Cursor ${k ? 'B' : 'A'}</span><output for="cursor-${k}">${(samples[i].t).toFixed(2)} s</output><input id="cursor-${k}" type="range" min="0" max="${samples.length - 1}" value="${i}" step="1"></label>`).join('');
   return `<section class="instrument-wrap" id="experiment" aria-labelledby="experiment-title">
 <div class="instrument">
 <header class="instrument-head"><div><span class="scope-icon" aria-hidden="true">∿</span><h2 id="experiment-title">Pendulum</h2></div><span>Synthetic replay</span></header>

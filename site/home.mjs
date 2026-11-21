@@ -13,7 +13,7 @@ ${instrument(run.samples.rotation)}
 <section class="section embed"><div>
 <p class="eyebrow">The SDK</p><h2>Bring your own sensor.</h2>
 <p>Feed a timestamp and a value from your sensor callback. The instrument keeps the readings and gives your app a meter, a plot, and collection controls.</p>
-<a href="docs/">Read the integration guide</a>
+<a href="docs/integration/">Read the integration guide</a>
 </div>
 <figure class="code-window"><figcaption>Gyroscope.tsx</figcaption><pre><code><span class="keyword">import</span> { createInstrument } <span class="keyword">from</span> <span class="literal">'@sensor-atlas/core'</span>;
 <span class="keyword">import</span> { InstrumentPanel } <span class="keyword">from</span> <span class="literal">'@sensor-atlas/react-native'</span>;

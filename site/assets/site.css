@@ -22,11 +22,11 @@ nav a[aria-current] { text-decoration: underline; }
 .section { padding: var(--section) var(--gutter); }
 .section + .section { border-top: 1px solid var(--line); }
 .eyebrow { color: var(--muted); }
-h1 { font-size: clamp(3.15rem, 7.7vw, 6.6rem); font-weight: 550; letter-spacing: -.074em; }
+h1 { font-size: clamp(3.15rem, 6.8vw, 5.9rem); font-weight: 500; letter-spacing: -.053em; }
 h2 { font-weight: 550; font-size: clamp(2.1rem, 4.5vw, 4rem); letter-spacing: -.068em; }
 h3 { font-size: 1.5rem; letter-spacing: -.045em; font-weight: 550; }
 .lead { max-width: 39rem; color: var(--muted); font-size: clamp(1.05rem, 2vw, 1.35rem); line-height: 1.5; }
-.hero { text-align: center; padding: clamp(4rem, 7vw, 7rem) var(--gutter) clamp(3.25rem, 6vw, 5.5rem); }
+.hero { text-align: center; padding: clamp(3rem, 5vw, 4.5rem) var(--gutter) clamp(2.75rem, 4.2vw, 4rem); }
 .hero .eyebrow { margin-bottom: 1.25rem; }
 .hero .lead { margin: 1.4rem auto; }
 .actions { display: flex; justify-content: center; flex-wrap: wrap; gap: .65rem; margin-top: 1.6rem; }
