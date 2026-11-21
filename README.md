@@ -16,6 +16,10 @@ npm start -w pocket-lab
 
 Open the app in an Expo SDK 58 development build or a matching Expo Go client. Start with the bundled pendulum model. Place cursor A at the first positive peak and B at the last. The ten cycles span 12 seconds, giving an average period of 1.2 seconds. Use **Previous sample** and **Next sample** to place a cursor precisely.
 
+Choose **Replay and collect** to feed the same samples through the live panel at their original pace. For a phone reading, choose **Gyroscope**, grant motion access and select an axis.
+
+After collection, tap **Save run**. Under **Saved runs**, open the recording to inspect it, share its JSON or export a channel as CSV. A teammate can use **Import session JSON** to reopen the original readings.
+
 ## Embed a panel
 
 Create one instrument per experiment screen. Pass source timestamps in seconds and values in the declared unit.
@@ -58,6 +62,8 @@ npm run build
 npm run check -w pocket-lab
 npm run site
 ```
+
+Run `npm run check:packages` to pack the SDKs, install them in an isolated app and bundle Pocket Lab for iOS and Android.
 
 The site builds into `site/dist`. The [project plan](sensor-atlas-plan.md) describes later releases and their device acceptance tests.
 
