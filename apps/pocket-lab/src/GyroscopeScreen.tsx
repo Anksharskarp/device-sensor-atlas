@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { AppState, Text, View } from "react-native";
 import { Gyroscope } from "expo-sensors";
 import { createInstrument } from "@sensor-atlas/core";
-import { InstrumentPanel } from "@sensor-atlas/react-native";
+import { InstrumentPanel, useInstrumentRevision } from "@sensor-atlas/react-native";
 import { connectGyroscope } from "./gyroscope";
+
+import { SaveRun } from "./SavedRuns";
 
 const channel = { quantity: "angularVelocity", unit: "rad/s", clock: "phone" };
 
@@ -11,6 +13,7 @@ export function GyroscopeScreen() {
   const [lab] = useState(() => createInstrument({ channels: {
     x: { ...channel, axis: "x" }, y: { ...channel, axis: "y" }, z: { ...channel, axis: "z" },
   } }));
+  useInstrumentRevision(lab);
   const [error, setError] = useState("");
   useEffect(() => {
     let disconnect: (() => void) | undefined;
@@ -37,5 +40,6 @@ export function GyroscopeScreen() {
   return <View>
     {error ? <Text accessibilityRole="alert">{error}</Text> : null}
     <InstrumentPanel instrument={lab} runName="Gyroscope" />
+    <SaveRun run={lab.lastRun} />
   </View>;
 }

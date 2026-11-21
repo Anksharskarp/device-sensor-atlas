@@ -6,18 +6,23 @@ import { RunInspector } from "@sensor-atlas/react-native";
 
 import { GyroscopeScreen } from "./src/GyroscopeScreen";
 
+import { SaveRun, SavedRuns } from "./src/SavedRuns";
+
 export default function App() {
   const [run] = useState(createPendulumRun);
-  const [live, setLive] = useState(false);
+  const [screen, setScreen] = useState<"model" | "gyro" | "files">("model");
   return (
     <SafeAreaProvider><SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <ScrollView contentContainerStyle={{ padding: 16, gap: 16 }}>
         <Text accessibilityRole="header" style={{ fontSize: 30 }}>Pocket Lab</Text>
         <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8 }}>
-          <Button title="Pendulum model" onPress={() => setLive(false)} />
-          <Button title="Gyroscope" onPress={() => setLive(true)} />
+          <Button title="Pendulum model" onPress={() => setScreen("model")} />
+          <Button title="Gyroscope" onPress={() => setScreen("gyro")} />
+          <Button title="Saved runs" onPress={() => setScreen("files")} />
         </View>
-        {live ? <GyroscopeScreen /> : <RunInspector run={run} />}
+        {screen === "gyro" && <GyroscopeScreen />}
+        {screen === "files" && <SavedRuns />}
+        {screen === "model" && <View><RunInspector run={run} /><SaveRun run={run} /></View>}
       </ScrollView>
     </SafeAreaView></SafeAreaProvider>
   );
