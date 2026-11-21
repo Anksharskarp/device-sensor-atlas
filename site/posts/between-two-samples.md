@@ -4,4 +4,4 @@ Now ask for the average value over the whole second. That question needs a model
 
 Sensor Atlas labels the arithmetic average as a sample mean. The interval also has a sample count, two endpoints, and a span in seconds. Those quantities let someone reading an experiment decide whether three observations are enough for the question at hand.
 
-Consider a disconnected probe. Drawing a straight line between the last value before the disconnect and the first value after reconnection quietly chooses a model for everything that happened in between. A break in the trace leaves that interval available for what the experiment actually established: a period without observations.
+Consider a disconnected probe. Drawing a straight line between the last value before the disconnect and the first value after reconnection quietly chooses a model for everything that happened in between. A break in the trace shows the reader exactly where those observations end and resume.

@@ -14,7 +14,7 @@ export const posts = [
   {
     slug: 'a-clock-for-each-source',
     title: 'A clock for each source',
-    description: 'A sensor reading carries two pieces of information. Its clock tells you how to use the second.',
+    description: 'Two probes can report the same timestamp for events that happened minutes apart.',
     date: '2026-11-21',
   },
 ];
