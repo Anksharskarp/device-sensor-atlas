@@ -106,3 +106,12 @@ pre { overflow: auto; padding: 1rem; background: var(--inset); border: 1px solid
 .prose td, .prose th { padding: .5rem; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
 .article-tail { border-top: 1px solid var(--line); margin-top: 2.4rem; padding-top: 1rem; }
 @media (max-width: 36rem) { .post-list a { grid-template-columns: 1fr; gap: .5rem; } }
+.embed { display: grid; grid-template-columns: minmax(13rem, .78fr) minmax(0, 1.22fr); gap: var(--gutter); align-items: center; border-top: 1px solid var(--line); }
+.embed .eyebrow { margin-bottom: 1rem; }
+.embed p:not(.eyebrow) { max-width: 30rem; margin: 1rem 0 1.4rem; color: var(--muted); }
+.code-window { overflow: hidden; color: var(--code-ink); background: var(--code-bg); border-radius: .3rem; }
+.code-window figcaption { padding: .6rem 1rem; border-bottom: 1px solid var(--code-rule); font: .875rem/1.5 var(--mono); }
+.code-window pre { border: 0; background: transparent; margin: 0; font-size: .84rem; }
+.code-window .keyword { color: var(--code-muted); }
+.code-window .literal { color: var(--code-literal); }
+@media (max-width: 48rem) { .embed { grid-template-columns: 1fr; gap: 1.5rem; } }

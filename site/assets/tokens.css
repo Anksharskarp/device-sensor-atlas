@@ -14,3 +14,10 @@
   --gutter: clamp(1rem, 4.3vw, 3.25rem);
   --section: clamp(3.5rem, 7.5vw, 7rem);
 }
+:root {
+  --code-bg: #222326;
+  --code-ink: #f0f1f1;
+  --code-rule: #424449;
+  --code-muted: #bcbdc1;
+  --code-literal: #bad2eb;
+}
