@@ -1,13 +1,11 @@
 import { useState } from "react";
 import { Button, ScrollView, Text, View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import { createPendulumRun } from "@sensor-atlas/core";
-import { RunInspector } from "@sensor-atlas/react-native";
+import { PendulumScreen } from "./src/PendulumScreen";
 import { createGyroscope, GyroscopeScreen } from "./src/GyroscopeScreen";
-import { SaveRun, SavedRuns } from "./src/SavedRuns";
+import { SavedRuns } from "./src/SavedRuns";
 
 export default function App() {
-  const [run] = useState(createPendulumRun);
   const [gyro] = useState(createGyroscope);
   const [screen, setScreen] = useState<"model" | "gyro" | "files">("model");
   return (
@@ -21,7 +19,7 @@ export default function App() {
         </View>
         {screen === "gyro" && <GyroscopeScreen lab={gyro} />}
         {screen === "files" && <SavedRuns />}
-        {screen === "model" && <View><RunInspector run={run} /><SaveRun run={run} /></View>}
+        {screen === "model" && <PendulumScreen />}
       </ScrollView>
     </SafeAreaView></SafeAreaProvider>
   );
