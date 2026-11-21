@@ -4,3 +4,4 @@ export type { Instrument, InstrumentOptions } from "./instrument.js";
 export { createPendulumRun } from "./pendulum.js";
 export { nearestSample, measureInterval } from "./measure.js";
 export { traceEnvelope } from "./envelope.js";
+export { parseRun, serializeRun, channelCsv } from "./session.js";
