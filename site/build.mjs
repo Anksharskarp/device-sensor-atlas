@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { marked } from 'marked';
 import { createPendulumRun } from '@sensor-atlas/core';
 import { project } from './config.mjs';
+import { buildGuides } from './guides.mjs';
 import { home } from './home.mjs';
 import { page } from './layout.mjs';
 import { postDate, postList, posts } from './posts/index.mjs';
@@ -37,3 +38,5 @@ for (const post of posts) {
 <div class="prose">${marked.parse(source)}</div><p class="article-tail"><a href="../">All journal entries</a></p></article>`,
   });
 }
+
+await buildGuides(resolve(site, '..'), render);

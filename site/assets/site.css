@@ -115,3 +115,15 @@ pre { overflow: auto; padding: 1rem; background: var(--inset); border: 1px solid
 .code-window .keyword { color: var(--code-muted); }
 .code-window .literal { color: var(--code-literal); }
 @media (max-width: 48rem) { .embed { grid-template-columns: 1fr; gap: 1.5rem; } }
+.guide-layout { display: grid; grid-template-columns: 15rem minmax(0, 1fr); }
+.guide-layout aside { padding: 2.5rem 1.2rem; border-right: 1px solid var(--line); }
+.guide-layout aside h2 { font: 600 .95rem var(--sans); letter-spacing: -.02em; margin-bottom: 1.1rem; }
+.guide-layout aside nav { display: grid; gap: .9rem; }
+.guide { padding: clamp(2.5rem, 5vw, 5rem) var(--gutter); min-width: 0; }
+.guide h1 { margin-bottom: 1.7rem; }
+.guide img { max-width: 100%; }
+@media (max-width: 48rem) {
+  .guide-layout { display: block; }
+  .guide-layout aside { border-right: 0; border-bottom: 1px solid var(--line); padding: 1.3rem var(--gutter); }
+  .guide-layout aside nav { display: flex; gap: .7rem 1rem; }
+}
