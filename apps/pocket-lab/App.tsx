@@ -4,11 +4,13 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { PendulumScreen } from "./src/PendulumScreen";
 import { createGyroscope, GyroscopeScreen } from "./src/GyroscopeScreen";
 import { TiltScreen } from "./src/TiltScreen";
+import { createPowerMeter, PowerScreen } from "./src/PowerScreen";
 import { SavedRuns } from "./src/SavedRuns";
 
 export default function App() {
+  const [power] = useState(createPowerMeter);
   const [gyro] = useState(createGyroscope);
-  const [screen, setScreen] = useState<"model" | "gyro" | "tilt" | "files">("model");
+  const [screen, setScreen] = useState<"model" | "gyro" | "tilt" | "power" | "files">("model");
   return (
     <SafeAreaProvider><SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <ScrollView contentContainerStyle={{ padding: 16, gap: 16 }}>
@@ -17,10 +19,12 @@ export default function App() {
           <Button title="Pendulum model" onPress={() => setScreen("model")} />
           <Button title="Gyroscope" onPress={() => setScreen("gyro")} />
           <Button title="Static tilt" onPress={() => setScreen("tilt")} />
+          <Button title="Power meter" onPress={() => setScreen("power")} />
           <Button title="Saved runs" onPress={() => setScreen("files")} />
         </View>
         {screen === "gyro" && <GyroscopeScreen lab={gyro} />}
         {screen === "tilt" && <TiltScreen />}
+        {screen === "power" && <PowerScreen lab={power} />}
         {screen === "files" && <SavedRuns />}
         {screen === "model" && <PendulumScreen />}
       </ScrollView>
