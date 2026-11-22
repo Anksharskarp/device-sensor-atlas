@@ -4,6 +4,7 @@ import type { Instrument, Reading } from "@sensor-atlas/core";
 import { Button } from "./Button.js";
 import { Meter } from "./Meter.js";
 import { SampleInspector } from "./RunInspector.js";
+import { ThresholdControls } from "./ThresholdControls.js";
 import { TracePlot } from "./TracePlot.js";
 import { layout } from "./theme.js";
 
@@ -19,11 +20,13 @@ export function CaptureControls<K extends string>({ instrument, runName, duratio
   instrument: Instrument<K>; runName?: string; durationSeconds?: number;
 }) {
   useInstrumentRevision(instrument);
+  if (instrument.armed) return <Button label="Disarm" onPress={() => instrument.disarm()} />;
   return <Button label={instrument.collecting ? "Stop" : "Collect"} selected={instrument.collecting}
     onPress={() => instrument.collecting ? instrument.stop() : instrument.start(runName, durationSeconds)} />;
 }
 
-export function InstrumentPanel<K extends string>({ instrument, runName, durationSeconds, analysis }: {
+export function InstrumentPanel<K extends string>({ instrument, runName, durationSeconds, analysis, threshold = false }: {
+  threshold?: boolean;
   analysis?: "period";
   instrument: Instrument<K>; runName?: string; durationSeconds?: number;
 }) {
@@ -55,6 +58,7 @@ export function InstrumentPanel<K extends string>({ instrument, runName, duratio
         }} />
         {instrument.lastRun && !review && <Button label="Inspect last run" onPress={() => setReview(true)} />}
       </View>
+      {threshold && <ThresholdControls instrument={instrument} channel={key} name={runName} durationSeconds={durationSeconds} />}
       {instrument.endedBy === "limit" && <Text style={layout.label}>Capture stopped at the sample limit.</Text>}
       {held ? <View style={layout.stack}>
         <Text style={layout.label}>{review ? instrument.lastRun?.name : "Frozen history"}</Text>

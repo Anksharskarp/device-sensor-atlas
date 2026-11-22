@@ -29,6 +29,7 @@ export function GyroscopeScreen({ lab }: { lab: Instrument<Axis> }) {
       } else if (state === "background") {
         disconnect?.();
         disconnect = undefined;
+        lab.disarm();
         if (lab.collecting) lab.stop();
       }
     }
@@ -37,12 +38,13 @@ export function GyroscopeScreen({ lab }: { lab: Instrument<Axis> }) {
     return () => {
       listener.remove();
       disconnect?.();
+      lab.disarm();
       if (lab.collecting) lab.stop();
     };
   }, [lab]);
   return <View>
     {error ? <Text accessibilityRole="alert">{error}</Text> : null}
-    <InstrumentPanel analysis="period" instrument={lab} runName="Gyroscope" />
+    <InstrumentPanel threshold analysis="period" instrument={lab} runName="Gyroscope" />
     <SaveRun run={lab.lastRun} />
   </View>;
 }
