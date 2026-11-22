@@ -1,7 +1,7 @@
 {
   "name": "@sensor-atlas/core",
-  "version": "0.1.0-alpha.0",
-  "description": "Capture and measure timestamped sensor readings.",
+  "version": "0.1.0-alpha.1",
+  "description": "Capture sensor events, compare oscillation periods and measure static tilt.",
   "author": "William Zhang",
   "license": "BSD-3-Clause",
   "repository": {
@@ -24,10 +24,22 @@
     "schema"
   ],
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "tag": "alpha"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "prepack": "npm run build"
-  }
+  },
+  "homepage": "https://anksharskarp.github.io/device-sensor-atlas/docs/",
+  "bugs": {
+    "url": "https://github.com/Anksharskarp/device-sensor-atlas/issues"
+  },
+  "keywords": [
+    "sensor",
+    "gyroscope",
+    "accelerometer",
+    "pendulum",
+    "react-native"
+  ]
 }
