@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Button, Text, View } from "react-native";
 import { getDocumentAsync } from "expo-document-picker";
 import { shareAsync } from "expo-sharing";
 import { File } from "expo-file-system";
-import type { Run } from "@sensor-atlas/core";
+import { gravityAxes, measureTilt, type Run } from "@sensor-atlas/core";
 import { RunInspector } from "@sensor-atlas/react-native";
 import { savedRuns, openRun, saveRun, exportCsv } from "./files";
 
@@ -70,9 +70,14 @@ export function SavedRuns() {
       setBusy(false);
     }
   }
+  const tilt = useMemo(() => {
+    if (!opened || !gravityAxes(opened.run)) return null;
+    try { return measureTilt(opened.run); } catch { return null; }
+  }, [opened]);
   if (opened) return <View>
     <Button title="Back to saved runs" onPress={() => setOpened(undefined)} />
-    <RunInspector analysis="period" run={opened.run} />
+    {tilt && <Text style={{ fontSize: 24 }}>Tilt between segments 0 and 1: {tilt.degrees.toFixed(1)}°</Text>}
+    <RunInspector analysis={tilt ? undefined : "period"} run={opened.run} />
     <Button title="Share session JSON" disabled={busy} onPress={() => share()} />
     {Object.keys(opened.run.channels).map(key =>
       <Button key={key} title={"Share " + key + " CSV"} disabled={busy} onPress={() => share(key)} />)}

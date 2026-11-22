@@ -8,7 +8,7 @@
       [
         "expo-sensors",
         {
-          "motionPermission": "Allow Pocket Lab to measure rotation with the gyroscope."
+          "motionPermission": "Allow Pocket Lab to measure rotation and tilt with the motion sensors."
         }
       ]
     ],
