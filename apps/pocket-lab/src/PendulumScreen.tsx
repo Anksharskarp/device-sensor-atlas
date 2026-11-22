@@ -42,7 +42,7 @@ export function PendulumScreen() {
   return <View style={{ gap: 8 }}>
     <Button title={playing ? "End replay" : "Replay and collect"} onPress={playing ? () => setPlaying(false) : play} />
     {live && !playing && <Button title="Inspect original model" onPress={() => setLive(false)} />}
-    {live ? <InstrumentPanel instrument={lab} runName="Pendulum replay" /> : <RunInspector run={model} />}
+    {live ? <InstrumentPanel analysis="period" instrument={lab} runName="Pendulum replay" /> : <RunInspector analysis="period" run={model} />}
     <SaveRun run={live ? lab.lastRun : model} />
   </View>;
 }

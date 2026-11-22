@@ -42,7 +42,7 @@ export function GyroscopeScreen({ lab }: { lab: Instrument<Axis> }) {
   }, [lab]);
   return <View>
     {error ? <Text accessibilityRole="alert">{error}</Text> : null}
-    <InstrumentPanel instrument={lab} runName="Gyroscope" />
+    <InstrumentPanel analysis="period" instrument={lab} runName="Gyroscope" />
     <SaveRun run={lab.lastRun} />
   </View>;
 }

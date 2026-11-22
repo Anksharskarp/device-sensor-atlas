@@ -72,7 +72,7 @@ export function SavedRuns() {
   }
   if (opened) return <View>
     <Button title="Back to saved runs" onPress={() => setOpened(undefined)} />
-    <RunInspector run={opened.run} />
+    <RunInspector analysis="period" run={opened.run} />
     <Button title="Share session JSON" disabled={busy} onPress={() => share()} />
     {Object.keys(opened.run.channels).map(key =>
       <Button key={key} title={"Share " + key + " CSV"} disabled={busy} onPress={() => share(key)} />)}

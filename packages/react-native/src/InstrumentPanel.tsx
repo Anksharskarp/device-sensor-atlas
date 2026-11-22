@@ -23,7 +23,8 @@ export function CaptureControls<K extends string>({ instrument, runName, duratio
     onPress={() => instrument.collecting ? instrument.stop() : instrument.start(runName, durationSeconds)} />;
 }
 
-export function InstrumentPanel<K extends string>({ instrument, runName, durationSeconds }: {
+export function InstrumentPanel<K extends string>({ instrument, runName, durationSeconds, analysis }: {
+  analysis?: "period";
   instrument: Instrument<K>; runName?: string; durationSeconds?: number;
 }) {
   const revision = useInstrumentRevision(instrument);
@@ -57,7 +58,7 @@ export function InstrumentPanel<K extends string>({ instrument, runName, duratio
       {instrument.endedBy === "limit" && <Text style={layout.label}>Capture stopped at the sample limit.</Text>}
       {held ? <View style={layout.stack}>
         <Text style={layout.label}>{review ? instrument.lastRun?.name : "Frozen history"}</Text>
-        <SampleInspector key={key} readings={held} unit={unit} />
+        <SampleInspector analysis={analysis} key={key} readings={held} unit={unit} />
       </View> : <TracePlot readings={data} segment={segment} start={end - 15} end={end} unit={unit} />}
       <Text style={layout.label}>Live · Segment {segment} · {diagnostics.observedHz?.toFixed(1) ?? "?"} Hz · {diagnostics.outOfOrder} out of order</Text>
     </View>
