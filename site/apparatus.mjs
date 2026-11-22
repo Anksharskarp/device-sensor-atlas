@@ -1,4 +1,4 @@
-import { bench, pendulum, plotPoint, tracePath } from './assets/apparatus.js';
+import { bench, dimensionPath, pendulum, plotPoint, tracePath } from './assets/apparatus.js';
 
 function suspension() {
   const { pivotX: x, pivotY: y, scale } = bench;
@@ -11,7 +11,17 @@ function suspension() {
     ticks.push(`<path d="M${x + radius * Math.sin(a)} ${y + radius * Math.cos(a)} l${h * Math.sin(a)} ${h * Math.cos(a)}"/>`);
   }
 
-  return `<path class="bench-rule" d="M48 15H299 M48 20H299 M196 20l11 13h34l12-13"/>
+  return `<g class="bench-stand">
+      <path class="bench-base" d="M35 232l12-9h60l14 9v7H35z"/>
+      <path d="M35 232h86 M52 239v3h13v-3m28 0v3h13v-3"/>
+      <path class="bench-metal" d="M72 10q0-3 4-3t4 3v213q-4 4-8 0z"/>
+      <path d="M76 12v208 M64 224q12 6 24 0"/>
+      <rect class="bench-metal" x="48" y="14" width="249" height="6" rx="2"/>
+      <path class="bench-base" d="M63 10h23v16H63z M86 15h8v6h-8"/>
+      <path d="M66 13v10m4-10v10m4-10v10 M94 18h8"/>
+      <path class="bench-metal" d="M100 13h4v10h-4z"/>
+    </g>
+    <path class="bench-rule" d="M196 20l11 13h34l12-13"/>
     <g class="bench-hardware" transform="translate(${x} ${y})">
       <path d="M-17 -15h34v13l-5 5h-24l-5-5z"/>
       <circle cx="-11" cy="-8" r="1.5"/><circle cx="11" cy="-8" r="1.5"/>
@@ -40,11 +50,11 @@ function rig(length) {
   return `<svg class="bench-rig" viewBox="0 0 448 254" role="img" aria-label="Phone suspended from a pivot, released ten degrees from vertical">
     ${suspension()}
     <g class="bench-dimensions">
-      <path data-dimension d="M128 ${pivotY}v${radius}m-5 0h10 M123 ${pivotY}h10"/>
+      <path data-dimension d="${dimensionPath(radius)}"/>
       <text data-length-label x="118" y="${pivotY + radius / 2}" text-anchor="end">${Math.round(length * 100)} cm</text>
     </g>
     ${arm(-releaseDegrees, true)}${arm(releaseDegrees, true)}${arm(releaseDegrees, false)}
-    <text class="bench-note" x="${pivotX}" y="247" text-anchor="middle">10° release</text>
+    <text class="bench-note" x="${pivotX}" y="238" text-anchor="middle">10° release</text>
   </svg>`;
 }
 

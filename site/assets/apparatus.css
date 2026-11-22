@@ -4,6 +4,7 @@
   --bench-muted: #c1c3c3;
   --bench-rule: #5f6466;
   --bench-grid: #42474a;
+  --bench-metal: #464b4e;
   --bench-signal: #ffc570;
   margin: 0;
   min-width: 0;
@@ -12,6 +13,7 @@
   font-family: var(--sans);
   text-align: left;
   color-scheme: dark;
+  container-type: inline-size;
 }
 .pendulum-bench figcaption,
 .bench-controls {
@@ -43,9 +45,12 @@
   margin-block: .7rem .4rem;
   fill: none;
 }
+.bench-stand { stroke: var(--bench-rule); stroke-width: 1.1; }
+.bench-base { fill: var(--bench-field); }
+.bench-metal { fill: var(--bench-metal); }
 .bench-hardware { fill: var(--bench-field); stroke: var(--bench-muted); stroke-width: 1.3; }
 .bench-rule, .bench-ticks, .bench-dimensions path { stroke: var(--bench-rule); }
-.bench-dimensions text, .bench-note { fill: var(--bench-muted); font: 13px var(--mono); }
+.bench-dimensions text, .bench-note { fill: var(--bench-muted); font: 15px var(--mono); }
 .bench-datum { stroke: var(--bench-rule); stroke-dasharray: 3 5; }
 .bench-ghost { fill: none; stroke: var(--bench-rule); opacity: .65; stroke-width: 1; }
 .bench-arm { stroke: var(--bench-ink); stroke-width: 1.6; }
@@ -107,4 +112,10 @@
 }
 .bench-controls button[data-playing]::before {
   clip-path: polygon(0 0, 33% 0, 33% 100%, 0 100%, 0 0, 67% 0, 100% 0, 100% 100%, 67% 100%, 67% 0);
+}
+
+@container (max-width: 23rem) {
+  .bench-controls { align-items: flex-end; }
+  .bench-controls legend { float: none; line-height: 1.4; }
+  .bench-controls label:first-child span { padding-left: 0; }
 }
