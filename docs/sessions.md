@@ -27,6 +27,18 @@ The [v1 JSON Schema](../packages/core/schema/run-v1.json) ships with the core pa
 
 The live ring retains 4,096 readings per channel by default. The separate recording retains up to 250,000 accepted readings across all channels. Set `historySize` and `captureLimit` when creating an instrument. At the limit the run closes, and incoming samples continue to update the live ring.
 
+## Threshold capture
+
+```ts
+lab.arm({ channel: "rotation", edge: "rising", level: 0.5, preSamples: 50, durationSeconds: 16 });
+```
+
+An armed instrument waits for consecutive accepted samples to cross the level on the selected channel. A rising edge goes from strictly below the level to at or above it. Falling uses the reverse rule. A gap clears the previous sample for this purpose.
+
+The trigger channel retains up to `preSamples` earlier readings from its current segment, including available history before arming. Other channels begin with their next accepted reading. Prehistory counts toward the run limit. The default is 128 samples, capped by the history size and space for the crossing. The optional timer starts when the trigger fires. Read `lab.armed` to inspect the settings or call `lab.disarm()` to cancel.
+
+Triggered runs include `trigger.channel`, `edge`, `level`, `segment` and `t`. The timestamp identifies the first acquired reading on the new side of the threshold. Manual runs use the same v1 format without a trigger field.
+
 ## Time and interruptions
 
 Seconds may start at any finite source time. Within a segment, accepted times increase strictly. Duplicate and older readings count toward `lab.diagnostics(key).outOfOrder`. A malformed batch throws before any part is written.

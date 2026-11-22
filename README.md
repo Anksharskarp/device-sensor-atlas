@@ -1,8 +1,8 @@
 # Sensor Atlas
 
-Sensor Atlas turns timestamped readings into a handheld instrument. Feed it a phone gyroscope or a stream from your own equipment. The React Native panel gives you a live meter, a strip chart, capture controls and two cursors for measuring a run.
+Sensor Atlas is a React Native SDK for motion experiments. Pocket Lab, the reference app, measures pendulum periods with a gyroscope and the angle between two stationary positions with an accelerometer. Both measurements can be reproduced from a saved session.
 
-[Try the pendulum](https://anksharskarp.github.io/device-sensor-atlas/) · [Development journal](https://anksharskarp.github.io/device-sensor-atlas/journal/)
+[Compare two recordings](https://anksharskarp.github.io/device-sensor-atlas/workbench/) · [Pendulum experiment](docs/pendulum.md) · [Static tilt](docs/tilt.md) · [Development journal](https://anksharskarp.github.io/device-sensor-atlas/journal/)
 
 ## Run Pocket Lab
 
@@ -17,6 +17,8 @@ npm start -w pocket-lab
 Open the app in an Expo SDK 58 development build or a matching Expo Go client. Start with the bundled pendulum model. Place cursor A at the first positive peak and B at the last. The ten cycles span 12 seconds, giving an average period of 1.2 seconds. Use **Previous sample** and **Next sample** to place a cursor precisely.
 
 Choose **Replay and collect** to feed the same samples through the live panel at their original pace. For a phone reading, choose **Gyroscope**, grant motion access and select an axis.
+
+For a hands-free start, choose **Set threshold trigger**, enter a level in rad/s and arm a rising or falling crossing. **Inspect last run** reports the mean period and cycle range between the cursors.
 
 After collection, tap **Save run**. Under **Saved runs**, open the recording to inspect it, share its JSON or export a channel as CSV. A teammate can use **Import session JSON** to reopen the original readings.
 
@@ -47,7 +49,7 @@ export function Experiment({ subscribe }: { subscribe: Subscribe }) {
     };
   }, [lab, subscribe]);
 
-  return <InstrumentPanel instrument={lab} runName="Short pendulum" />;
+  return <InstrumentPanel instrument={lab} analysis="period" threshold runName="Short pendulum" />;
 }
 ```
 
@@ -57,7 +59,7 @@ Tap **Collect**, move the sensor, then tap **Stop**. **Inspect last run** opens 
 
 | Package | Contents |
 | --- | --- |
-| [@sensor-atlas/core](packages/core) | Typed channels, bounded history, manual and timed capture, cursor measurements, session JSON and per-channel CSV |
+| [@sensor-atlas/core](packages/core) | Manual, timed and threshold capture, period comparison, static tilt, session JSON and per-channel CSV |
 | [@sensor-atlas/react-native](packages/react-native) | InstrumentPanel, TracePlot, Meter, CaptureControls, TimeCursor and RunInspector |
 | [Pocket Lab](apps/pocket-lab) | Expo reference app built with both packages |
 

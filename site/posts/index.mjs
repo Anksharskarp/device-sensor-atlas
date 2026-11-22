@@ -1,5 +1,11 @@
 export const posts = [
   {
+    slug: 'before-the-trigger',
+    title: 'What happened before the trigger?',
+    description: 'Keeping the release in a gyroscope recording, down to the sample that crosses the threshold.',
+    date: '2026-11-21',
+  },
+  {
     slug: 'ten-swings',
     title: 'Ten swings, one measurement',
     description: 'A pendulum gives the first instrument a question with an answer you can check by hand.',
