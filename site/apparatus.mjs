@@ -51,10 +51,10 @@ function rig(length) {
     ${suspension()}
     <g class="bench-dimensions">
       <path data-dimension d="${dimensionPath(radius)}"/>
-      <text data-length-label x="118" y="${pivotY + radius / 2}" text-anchor="end">${Math.round(length * 100)} cm</text>
+      <text data-length-label x="137" y="${pivotY + radius / 2}">${Math.round(length * 100)} cm</text>
     </g>
     ${arm(-releaseDegrees, true)}${arm(releaseDegrees, true)}${arm(releaseDegrees, false)}
-    <text class="bench-note" x="${pivotX}" y="238" text-anchor="middle">10° release</text>
+    <text class="bench-note" x="285" y="76">${releaseDegrees}° release</text>
   </svg>`;
 }
 

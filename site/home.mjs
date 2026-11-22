@@ -34,5 +34,8 @@ export function home() {
   durationSeconds: 16,
   name: <span class="literal">"Long pendulum"</span>,
 });</code></pre></figure></section>
+<section class="section methods"><h2>Pocket Lab instruments</h2>
+<dl><div><dt><a href="docs/pendulum/">Pendulum timer</a></dt><dd>Time successive crossings on a gyroscope axis and compare the period across suspension lengths.</dd></div>
+<div><dt><a href="docs/tilt/">Static tilt</a></dt><dd>Record a reference surface and a slope. The accelerometer’s gravity vector gives the angle between the two positions.</dd></div></dl></section>
 <section class="section journal"><header class="section-title"><h2>Development journal</h2><a href="journal/">All entries</a></header>${postList('journal/')}</section>`;
 }
