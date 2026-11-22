@@ -8,17 +8,19 @@ import { PendulumScreen } from "./src/PendulumScreen";
 import { createGyroscope, GyroscopeScreen } from "./src/GyroscopeScreen";
 import { TiltScreen } from "./src/TiltScreen";
 import { createPowerMeter, PowerScreen } from "./src/PowerScreen";
+import { ProbeScreen, type Probe } from "./src/ProbeScreen";
 import { SavedRuns } from "./src/SavedRuns";
 
 const screens = {
   home: "Pocket Lab", model: "Pendulum timer", gyro: "Gyroscope", tilt: "Static tilt",
-  power: "Power meter", files: "Saved runs",
+  power: "Power meter", probe: "External probe", files: "Saved runs",
 };
 type Screen = keyof typeof screens;
 const tools = [
   ["gyro", "Capture rotation on the x, y or z axis.", "rad/s"],
   ["tilt", "Measure a slope against a reference surface.", "°"],
   ["power", "Integrate readings from a wattmeter.", "Wh"],
+  ["probe", "Record a sensor in its own units.", "WS"],
   ["files", "Reopen, import or share a recording.", "JSON"],
 ] as const;
 
@@ -49,6 +51,7 @@ function Catalog({ open }: { open: (screen: Screen) => void }) {
 }
 
 export default function App() {
+  const [probe, setProbe] = useState<Probe>();
   const [power] = useState(createPowerMeter);
   const [gyro] = useState(createGyroscope);
   const [screen, setScreen] = useState<Screen>("home");
@@ -61,6 +64,7 @@ export default function App() {
       {screen === "gyro" && <GyroscopeScreen lab={gyro} />}
       {screen === "tilt" && <TiltScreen />}
       {screen === "power" && <PowerScreen lab={power} />}
+      {screen === "probe" && <ProbeScreen probe={probe} setProbe={setProbe} />}
       {screen === "files" && <SavedRuns />}
       {screen === "model" && <PendulumScreen />}
     </ScrollView>
