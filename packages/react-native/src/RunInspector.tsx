@@ -109,7 +109,7 @@ export function RunInspector<K extends string>({ run, analysis }: { run: Run<K>;
   const key = keys.includes(chosen) ? chosen : keys[0];
   return (
     <View style={layout.panel}>
-      <Text accessibilityRole="header" style={layout.label}>{run.name}</Text>
+      <Text accessibilityRole="header" style={layout.heading}>{run.name}</Text>
       {keys.length > 1 && <View style={layout.row}>{keys.map(k =>
         <Button key={k} label={k} selected={k === key} onPress={() => choose(k)} />)}</View>}
       <Text style={layout.label}>{key} · {run.channels[key].unit}</Text>

@@ -4,7 +4,8 @@ import type { GestureResponderEvent } from "react-native";
 import Svg, { Circle, Line, Polyline } from "react-native-svg";
 import { traceEnvelope } from "@sensor-atlas/core";
 import type { Reading } from "@sensor-atlas/core";
-import { ink, layout, rule } from "./theme.js";
+import { layout } from "./theme.js";
+import { instrumentColors as c } from "./tokens.js";
 
 export interface TracePlotProps {
   readings: readonly Reading[];
@@ -35,22 +36,24 @@ export function TracePlot({ readings, segment, start, end, unit, cursors = [], o
     onCursor?.(start + Math.max(0, Math.min(1, fraction)) * (end - start));
   }
   return (
-    <View style={layout.stack}>
-      <Text style={layout.label}>{points.length ? min.toFixed(2) + " to " + max.toFixed(2) + " " + unit : "Waiting for samples"}</Text>
+    <View style={layout.scope}>
+      <Text style={layout.scaleLabel}>{points.length ? min.toFixed(2) + " to " + max.toFixed(2) + " " + unit : "Waiting for samples"}</Text>
       <View onLayout={e => setWidth(Math.max(1, Math.floor(e.nativeEvent.layout.width)))}
         onStartShouldSetResponder={() => !!onCursor} onResponderGrant={touch} onResponderMove={touch}>
         <View pointerEvents="none">
           <Svg width="100%" height={height}>
-            <Line x1={0} x2={width} y1={height - 1} y2={height - 1} stroke={rule} />
-            {min < 0 && max > 0 && <Line x1={0} x2={width} y1={y(0)} y2={y(0)} stroke={rule} />}
-            <Polyline fill="none" stroke={ink} strokeWidth={2} points={points.map(p => x(p.t) + "," + y(p.value)).join(" ")} />
-            {points.length === 1 && <Circle cx={x(points[0].t)} cy={y(points[0].value)} r={2} fill={ink} />}
-            {cursors.map((t, i) => <Line key={i} x1={x(t)} x2={x(t)} y1={0} y2={height} stroke={ink} strokeDasharray={i ? "2 3" : "7 3"} />)}
+            {[0.25, 0.5, 0.75].map(fraction => <Line key={fraction} x1={width * fraction} x2={width * fraction}
+              y1={0} y2={height} stroke={c.grid} strokeDasharray="2 5" />)}
+            <Line x1={0} x2={width} y1={height - 1} y2={height - 1} stroke={c.grid} />
+            {min < 0 && max > 0 && <Line x1={0} x2={width} y1={y(0)} y2={y(0)} stroke={c.grid} />}
+            <Polyline fill="none" stroke={c.signal} strokeWidth={2} points={points.map(p => x(p.t) + "," + y(p.value)).join(" ")} />
+            {points.length === 1 && <Circle cx={x(points[0].t)} cy={y(points[0].value)} r={2} fill={c.signal} />}
+            {cursors.map((t, i) => <Line key={i} x1={x(t)} x2={x(t)} y1={0} y2={height} stroke={c.onField} strokeDasharray={i ? "2 3" : "7 3"} />)}
           </Svg>
         </View>
       </View>
       <View style={layout.axis}>
-        <Text style={layout.label}>{start.toFixed(2)} s</Text><Text style={layout.label}>{end.toFixed(2)} s</Text>
+        <Text style={layout.scaleLabel}>{start.toFixed(2)} s</Text><Text style={layout.scaleLabel}>{end.toFixed(2)} s</Text>
       </View>
     </View>
   );

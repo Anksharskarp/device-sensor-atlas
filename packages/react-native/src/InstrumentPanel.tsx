@@ -48,7 +48,7 @@ export function InstrumentPanel<K extends string>({ instrument, runName, duratio
     <View style={layout.panel}>
       {keys.length > 1 && <View style={layout.row}>{keys.map(k => <Button key={k} label={k} selected={k === key}
         onPress={() => { choose(k); freeze(null); }} />)}</View>}
-      <Text style={layout.label}>{key}{axis ? " · " + axis + " axis" : ""}</Text>
+      <Text style={layout.heading}>{key}{axis ? " · " + axis + " axis" : ""}</Text>
       <Meter value={current?.value ?? null} unit={unit} />
       <View style={layout.row}>
         <CaptureControls instrument={instrument} runName={runName} durationSeconds={durationSeconds} />
@@ -64,7 +64,7 @@ export function InstrumentPanel<K extends string>({ instrument, runName, duratio
         <Text style={layout.label}>{review ? instrument.lastRun?.name : "Frozen history"}</Text>
         <SampleInspector analysis={analysis} key={key} readings={held} channelKey={key} channel={instrument.channels[key]} />
       </View> : <TracePlot readings={data} segment={segment} start={end - 15} end={end} unit={unit} />}
-      <Text style={layout.label}>Live · Segment {segment} · {diagnostics.observedHz?.toFixed(1) ?? "?"} Hz · {diagnostics.outOfOrder} out of order</Text>
+      <Text style={layout.caption}>Live · Segment {segment} · {diagnostics.observedHz?.toFixed(1) ?? "?"} Hz · {diagnostics.outOfOrder} out of order</Text>
     </View>
   );
 }
