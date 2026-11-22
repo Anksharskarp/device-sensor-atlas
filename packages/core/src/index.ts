@@ -7,3 +7,4 @@ export { traceEnvelope } from "./envelope.js";
 export { parseRun, serializeRun, channelCsv } from "./session.js";
 export { createReplay } from "./replay.js";
 export { measurePeriod, type PeriodMeasurement, type PeriodOptions } from "./oscillation.js";
+export { comparePeriods, type RunSelection } from "./comparison.js";
