@@ -10,11 +10,13 @@
     "build": "npm run build -w @sensor-atlas/core && npm run build -w @sensor-atlas/react-native",
     "test": "npm run build -w @sensor-atlas/core && node --test packages/core/test/*.test.mjs apps/pocket-lab/test/*.test.mjs",
     "site": "npm run build -w @sensor-atlas/core && node site/build.mjs",
-    "check:packages": "node scripts/check-packages.mjs"
+    "check:packages": "node scripts/check-packages.mjs",
+    "meter:example": "node examples/power-meter.mjs"
   },
   "devDependencies": {
     "marked": "18.2.1",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "ws": "8.23.0"
   },
   "type": "module",
   "license": "BSD-3-Clause"
