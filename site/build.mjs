@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { marked } from 'marked';
 import { createPendulumRun } from '@sensor-atlas/core';
 import { instrument } from './pendulum.mjs';
+import { instrumentColors } from "../packages/react-native/src/tokens.ts";
 import { project } from './config.mjs';
 import { buildGuides } from './guides.mjs';
 import { exampleLengths, modelRun, workbench } from './workbench.mjs';
@@ -22,7 +23,9 @@ async function render(route, content) {
 
 await rm(output, { recursive: true, force: true });
 await cp(resolve(site, 'assets'), resolve(output, 'assets'), { recursive: true });
-await render('.', { title: project.name, body: home(), styles: ['apparatus.css'], scripts: ['apparatus.js'] });
+const colorRules = Object.entries(instrumentColors).map(([key, value]) => `  --atlas-${key}: ${value};`);
+await writeFile(resolve(output, 'assets', 'palette.css'), [':root {', ...colorRules, '}', ''].join('\n'));
+await render('.', { title: project.name, body: home(), styles: ['apparatus.css'], scripts: ['apparatus.js', 'bench.js'] });
 
 await render('experiments/ten-swings', {
   title: 'Time ten swings', root: '../../', scripts: ['cursors.js'],

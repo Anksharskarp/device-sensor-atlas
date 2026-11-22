@@ -14,7 +14,7 @@ export function page({ title, description = project.description, root = './', cu
 <title>${title === project.name ? title : title + ' | ' + project.name}</title>
 <meta name="description" content="${description}">
 <link rel="icon" href="${root}assets/mark.svg" type="image/svg+xml">
-<link rel="stylesheet" href="${root}assets/tokens.css"><link rel="stylesheet" href="${root}assets/site.css">
+<link rel="stylesheet" href="${root}assets/palette.css"><link rel="stylesheet" href="${root}assets/tokens.css"><link rel="stylesheet" href="${root}assets/site.css">
 ${styles.map(file => `<link rel="stylesheet" href="${root}assets/${file}">`).join('')}
 </head>
 <body>
