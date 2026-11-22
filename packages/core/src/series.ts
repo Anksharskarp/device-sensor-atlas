@@ -25,6 +25,11 @@ export class Series {
     return reading;
   }
 
+  latest() {
+    if (this.previousTime === undefined) return undefined;
+    return this.buffer[(this.next + this.capacity - 1) % this.capacity];
+  }
+
   gap() {
     this.segment++;
     this.previousTime = undefined;

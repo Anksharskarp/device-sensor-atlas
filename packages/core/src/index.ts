@@ -1,6 +1,6 @@
-export type { Channel, Channels, Sample, Reading, Run } from "./types.js";
+export type { Channel, Channels, Sample, Reading, Run, TriggerEvent } from "./types.js";
 export { createInstrument } from "./instrument.js";
-export type { Instrument, InstrumentOptions } from "./instrument.js";
+export type { Instrument, InstrumentOptions, TriggerOptions } from "./instrument.js";
 export { createPendulumRun } from "./pendulum.js";
 export { nearestSample, measureInterval } from "./measure.js";
 export { traceEnvelope } from "./envelope.js";

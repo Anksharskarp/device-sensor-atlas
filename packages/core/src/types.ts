@@ -17,9 +17,18 @@ export interface Reading extends Sample {
   readonly segment: number;
 }
 
+export interface TriggerEvent<K extends string = string> {
+  readonly channel: K;
+  readonly edge: "rising" | "falling";
+  readonly level: number;
+  readonly segment: number;
+  readonly t: number;
+}
+
 export interface Run<K extends string = string> {
   readonly version: 1;
   readonly name: string;
+  readonly trigger?: TriggerEvent<K>;
   readonly channels: Readonly<Record<K, Channel>>;
   readonly samples: Readonly<Record<K, readonly Reading[]>>;
 }
