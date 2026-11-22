@@ -61,7 +61,7 @@ The panel includes collection controls, live meter, plot, and cursor measurement
 
 ### Packaging and the contribution model
 
-Publish two MIT-licensed npm packages initially. Proposed names are subject to registry availability.
+Publish two BSD-3-Clause npm packages initially. Proposed names are subject to registry availability.
 
 | Package | Public contract |
 | --- | --- |

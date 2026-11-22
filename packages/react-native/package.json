@@ -3,7 +3,7 @@
   "version": "0.1.0-alpha.0",
   "description": "A React Native panel for collecting and inspecting sensor data.",
   "author": "William Zhang",
-  "license": "MIT",
+  "license": "BSD-3-Clause",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Anksharskarp/device-sensor-atlas.git",

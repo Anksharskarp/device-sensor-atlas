@@ -78,4 +78,4 @@ The site builds into `site/dist`. The [project plan](sensor-atlas-plan.md) descr
 
 ## License
 
-William Zhang. The [core](packages/core/LICENSE) and [React Native](packages/react-native/LICENSE) packages use the MIT license. The rest of the repository uses the [BSD 3-Clause license](LICENSE).
+Copyright William Zhang. [BSD 3-Clause](LICENSE).
