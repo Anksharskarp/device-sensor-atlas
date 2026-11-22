@@ -8,3 +8,4 @@ export { parseRun, serializeRun, channelCsv } from "./session.js";
 export { createReplay } from "./replay.js";
 export { measurePeriod, type PeriodMeasurement, type PeriodOptions } from "./oscillation.js";
 export { comparePeriods, type RunSelection } from "./comparison.js";
+export { gravityAxes, gravityPose, measureTilt, type Axis } from "./tilt.js";
