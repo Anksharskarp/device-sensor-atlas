@@ -38,7 +38,7 @@ export function home() {
   <div class="sheet-copy"><h3>${e.title}</h3><p>${e.description}</p><a href="${e.href}">${e.link}</a></div>${e.figure()}</section>`).join('');
   return `<section class="cover">
     <div class="cover-copy"><p class="edition">Sensor Atlas for React Native</p><h1>Pocket Lab</h1>
-    <p>A gyroscope can tell you how long a pendulum takes to swing. A wattmeter can tell you how much energy a load consumes. Pocket Lab records both, with the source readings attached to each measurement.</p>
+    <p>Use the gyroscope in your phone to time a pendulum, or connect a bench meter to measure the energy drawn by a circuit. Pocket Lab keeps the original readings so you can return to any part of the experiment.</p>
     <div class="cover-actions"><a class="button cover-primary" href="#experiment">Explore the instruments</a><a href="docs/">SDK documentation</a></div></div>
     <img src="assets/images/pendulum-rig.webp" width="1536" height="1024" fetchpriority="high" alt="Illustration of a phone suspended from a clamp stand over an optical bench">
   </section>
