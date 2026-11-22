@@ -28,12 +28,12 @@ export function PeriodReport({ readings, a }: SelectionProps) {
   const oscillation = useMemo(() => measurePeriod(readings, { segment: a.segment }), [readings, a.segment]);
   return (
     <View style={layout.stack}>
-    <Text accessibilityRole="header" style={layout.label}>Period between cursors</Text>
-    {oscillation ? <>
-      <Text style={layout.result}>{oscillation.periodSeconds.toFixed(3)} s</Text>
-      <Text style={layout.label}>{oscillation.cycles} complete cycles · {oscillation.frequencyHz.toFixed(3)} Hz</Text>
-      <Text style={layout.label}>Shortest {oscillation.shortestSeconds.toFixed(3)} s · Longest {oscillation.longestSeconds.toFixed(3)} s</Text>
-    </> : <Text style={layout.label}>Select at least three rising crossings on an oscillating axis.</Text>}
+      <Text accessibilityRole="header" style={layout.label}>Period between cursors</Text>
+      {oscillation ? <>
+        <Text style={layout.result}>{oscillation.periodSeconds.toFixed(3)} s</Text>
+        <Text style={layout.label}>{oscillation.cycles} complete cycles · {oscillation.frequencyHz.toFixed(3)} Hz</Text>
+        <Text style={layout.label}>Shortest {oscillation.shortestSeconds.toFixed(3)} s · Longest {oscillation.longestSeconds.toFixed(3)} s</Text>
+      </> : <Text style={layout.label}>Select at least three rising crossings on an oscillating axis.</Text>}
     </View>
   );
 }

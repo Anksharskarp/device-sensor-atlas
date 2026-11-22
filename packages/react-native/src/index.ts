@@ -4,3 +4,4 @@ export { RunInspector, TimeCursor, PeriodReport, type SelectionProps, type Selec
 export { InstrumentPanel, CaptureControls, useInstrumentRevision } from "./InstrumentPanel.js";
 export { Button as ActionButton } from "./Button.js";
 export { instrumentColors } from "./tokens.js";
+export { IntegralReport } from "./IntegralReport.js";
