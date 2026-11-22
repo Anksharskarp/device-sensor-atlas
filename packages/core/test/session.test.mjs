@@ -33,3 +33,12 @@ test("the v1 reader accepts a recording that begins mid-segment", async () => {
   assert.deepEqual(run.samples.voltage.map(s => s.segment), [1, 2]);
   assert.deepEqual(run.samples.current, []);
 });
+
+test("trigger metadata must identify a matching sample on the recorded edge", () => {
+  const run = createPendulumRun();
+  run.trigger = { channel: "rotation", segment: 0, level: 1, edge: "rising", t: 0 };
+  assert.deepEqual(parseRun(serializeRun(run)).trigger, run.trigger);
+  for (const override of [{ t: 0.001 }, { edge: "falling" }, { channel: "absent" }, { segment: 1 }]) {
+    assert.throws(() => parseRun(serializeRun({ ...run, trigger: { ...run.trigger, ...override } })));
+  }
+});

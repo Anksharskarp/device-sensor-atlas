@@ -28,6 +28,17 @@ export function parseRun(json: string): Run {
       prior = reading;
     }
   }
+  if (data.trigger !== undefined) {
+    const event = data.trigger;
+    if (!record(event) || typeof event.channel !== "string" || !Object.hasOwn(data.samples, event.channel)
+      || (event.edge !== "rising" && event.edge !== "falling") || typeof event.level !== "number"
+      || !Number.isFinite(event.level)) throw new TypeError("Invalid trigger");
+    const samples = data.samples[event.channel] as Reading[];
+    const reading = samples.find(s => s.segment === event.segment && s.t === event.t);
+    if (!reading || (event.edge === "rising" ? reading.value < event.level : reading.value > event.level)) {
+      throw new TypeError("Trigger does not match a recorded crossing sample");
+    }
+  }
   return data as unknown as Run;
 }
 
