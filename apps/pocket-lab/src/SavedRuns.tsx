@@ -5,6 +5,7 @@ import { shareAsync } from "expo-sharing";
 import { File } from "expo-file-system";
 import { gravityAxes, measureTilt, type Run } from "@sensor-atlas/core";
 import { RunInspector } from "@sensor-atlas/react-native";
+import { SelectionReport } from "./SelectionReport";
 import { savedRuns, openRun, saveRun, exportCsv } from "./files";
 
 export function SaveRun({ run }: { run?: Run }) {
@@ -77,7 +78,7 @@ export function SavedRuns() {
   if (opened) return <View>
     <Button title="Back to saved runs" onPress={() => setOpened(undefined)} />
     {tilt && <Text style={{ fontSize: 24 }}>Tilt between segments 0 and 1: {tilt.degrees.toFixed(1)}°</Text>}
-    <RunInspector analysis={tilt ? undefined : "period"} run={opened.run} />
+    <RunInspector analysis={SelectionReport} run={opened.run} />
     <Button title="Share session JSON" disabled={busy} onPress={() => share()} />
     {Object.keys(opened.run.channels).map(key =>
       <Button key={key} title={"Share " + key + " CSV"} disabled={busy} onPress={() => share(key)} />)}
