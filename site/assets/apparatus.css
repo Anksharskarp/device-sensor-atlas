@@ -1,0 +1,110 @@
+.pendulum-bench {
+  --bench-field: #202326;
+  --bench-ink: #f6f4ef;
+  --bench-muted: #c1c3c3;
+  --bench-rule: #5f6466;
+  --bench-grid: #42474a;
+  --bench-signal: #ffc570;
+  margin: 0;
+  min-width: 0;
+  color: var(--bench-ink);
+  background: var(--bench-field);
+  font-family: var(--sans);
+  text-align: left;
+  color-scheme: dark;
+}
+.pendulum-bench figcaption,
+.bench-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem 1rem;
+  padding: .9rem clamp(.85rem, 3vw, 1.55rem);
+}
+.pendulum-bench figcaption {
+  border-bottom: 1px solid var(--bench-grid);
+  font-size: 1rem;
+}
+.pendulum-bench figcaption strong { font-weight: 550; }
+.pendulum-bench figcaption span,
+.bench-label,
+.bench-controls legend,
+.bench-controls button,
+.bench-controls label {
+  font: .875rem/1.4 var(--mono);
+}
+.pendulum-bench figcaption span { color: var(--bench-muted); }
+.pendulum-bench [data-period] { margin-left: .4em; color: var(--bench-signal); }
+.bench-rig {
+  display: block;
+  width: 100%;
+  height: clamp(13rem, 21vw, 17rem);
+  margin-block: .7rem .4rem;
+  fill: none;
+}
+.bench-hardware { fill: var(--bench-field); stroke: var(--bench-muted); stroke-width: 1.3; }
+.bench-rule, .bench-ticks, .bench-dimensions path { stroke: var(--bench-rule); }
+.bench-dimensions text, .bench-note { fill: var(--bench-muted); font: 13px var(--mono); }
+.bench-datum { stroke: var(--bench-rule); stroke-dasharray: 3 5; }
+.bench-ghost { fill: none; stroke: var(--bench-rule); opacity: .65; stroke-width: 1; }
+.bench-arm { stroke: var(--bench-ink); stroke-width: 1.6; }
+.bench-arm rect { fill: var(--bench-field); }
+.bench-arm circle { stroke: var(--bench-signal); }
+.bench-scope { padding: .4rem clamp(.85rem, 3vw, 1.55rem) .9rem; }
+.bench-label { margin-bottom: .55rem; }
+.bench-label span { color: var(--bench-muted); }
+.bench-scope-grid {
+  display: grid;
+  grid-template-columns: 1.45rem minmax(0, 1fr);
+  gap: .3rem .4rem;
+  color: var(--bench-muted);
+  font: .8rem/1.2 var(--mono);
+}
+.bench-y, .bench-x { display: flex; justify-content: space-between; }
+.bench-y { flex-direction: column; text-align: right; }
+.bench-plot { width: 100%; height: 4.75rem; overflow: visible; fill: none; }
+.bench-plot path { vector-effect: non-scaling-stroke; }
+.bench-grid { stroke: var(--bench-grid); }
+.bench-wave { stroke: var(--bench-signal); stroke-width: 2; }
+.bench-position { stroke: var(--bench-ink); stroke-dasharray: 2 3; }
+.bench-point { fill: var(--bench-ink); }
+.bench-x, .bench-x-label { grid-column: 2; }
+.bench-x-label { text-align: center; }
+.bench-controls { border-top: 1px solid var(--bench-grid); }
+.bench-controls fieldset { margin: 0; padding: 0; border: 0; min-width: 0; }
+.bench-controls legend { float: left; color: var(--bench-muted); line-height: 2.5rem; margin-right: .6rem; }
+.bench-controls fieldset div { display: inline-flex; }
+.bench-controls label { position: relative; cursor: pointer; }
+.bench-controls input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+.bench-controls label span, .bench-controls button {
+  display: block;
+  padding: .6rem .45rem;
+  line-height: 1.25rem;
+  color: var(--bench-muted);
+}
+.bench-controls input:checked + span { color: var(--bench-ink); text-decoration: underline; text-underline-offset: .32em; }
+.bench-controls input:focus-visible + span,
+.bench-controls button:focus-visible { outline: 2px solid var(--bench-ink); outline-offset: 1px; }
+.bench-controls label:hover span, .bench-controls button:hover { color: var(--bench-ink); }
+.bench-controls button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: .5rem;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  min-width: 4.8rem;
+  color: var(--bench-ink);
+}
+.bench-controls button::before {
+  content: '';
+  width: .66rem;
+  height: .7rem;
+  background: currentColor;
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+.bench-controls button[data-playing]::before {
+  clip-path: polygon(0 0, 33% 0, 33% 100%, 0 100%, 0 0, 67% 0, 100% 0, 100% 100%, 67% 100%, 67% 0);
+}
