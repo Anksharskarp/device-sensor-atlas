@@ -1,10 +1,10 @@
 import { useEffect, useState, useMemo } from "react";
-import { Button, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { getDocumentAsync } from "expo-document-picker";
 import { shareAsync } from "expo-sharing";
 import { File } from "expo-file-system";
 import { gravityAxes, measureTilt, type Run } from "@sensor-atlas/core";
-import { RunInspector } from "@sensor-atlas/react-native";
+import { ActionButton, RunInspector } from "@sensor-atlas/react-native";
 import { SelectionReport } from "./SelectionReport";
 import { savedRuns, openRun, saveRun, exportCsv } from "./files";
 
@@ -25,7 +25,7 @@ export function SaveRun({ run }: { run?: Run }) {
     }
   }
   return <View>
-    <Button title="Save run" disabled={busy || !run} onPress={save} />
+    <ActionButton label="Save run" disabled={busy || !run} onPress={save} />
     {status ? <Text accessibilityLiveRegion="polite">{status}</Text> : null}
   </View>;
 }
@@ -76,19 +76,19 @@ export function SavedRuns() {
     try { return measureTilt(opened.run); } catch { return null; }
   }, [opened]);
   if (opened) return <View>
-    <Button title="Back to saved runs" onPress={() => setOpened(undefined)} />
+    <ActionButton label="Back to saved runs" onPress={() => setOpened(undefined)} />
     {tilt && <Text style={{ fontSize: 24 }}>Tilt between segments 0 and 1: {tilt.degrees.toFixed(1)}°</Text>}
     <RunInspector analysis={SelectionReport} run={opened.run} />
-    <Button title="Share session JSON" disabled={busy} onPress={() => share()} />
+    <ActionButton label="Share session JSON" disabled={busy} onPress={() => share()} />
     {Object.keys(opened.run.channels).map(key =>
-      <Button key={key} title={"Share " + key + " CSV"} disabled={busy} onPress={() => share(key)} />)}
+      <ActionButton key={key} label={"Share " + key + " CSV"} disabled={busy} onPress={() => share(key)} />)}
     {error ? <Text accessibilityRole="alert">{error}</Text> : null}
   </View>;
   return <View style={{ gap: 8 }}>
-    <Button title="Import session JSON" disabled={busy} onPress={() => open()} />
+    <ActionButton label="Import session JSON" disabled={busy} onPress={() => open()} />
     {error ? <Text accessibilityRole="alert">{error}</Text> : null}
     {!files.length && !error && <Text>Save a completed run to reopen it here.</Text>}
-    {files.map(file => <Button key={file.uri} title={file.name.replace(/-[a-z0-9]+\.json$/, "")}
+    {files.map(file => <ActionButton key={file.uri} label={file.name.replace(/-[a-z0-9]+\.json$/, "")}
       disabled={busy} onPress={() => open(file)} />)}
   </View>;
 }

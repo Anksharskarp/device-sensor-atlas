@@ -1,5 +1,6 @@
+import { ActionButton } from "@sensor-atlas/react-native";
 import { useEffect, useRef, useState } from "react";
-import { AppState, Button, Text, View } from "react-native";
+import { AppState, Text, View } from "react-native";
 import { Accelerometer, type AccelerometerMeasurement } from "expo-sensors";
 import { gravityPose, measureTilt, type Run } from "@sensor-atlas/core";
 import { collectPose, tiltRun } from "./accelerometer";
@@ -55,10 +56,9 @@ export function TiltScreen() {
     }
   }
   return <View style={{ gap: 12 }}>
-    <Text accessibilityRole="header" style={{ fontSize: 24 }}>Static tilt</Text>
     <Text>Place the phone face up on a level reference. Keep the same edge pointing uphill when moving it to the slope.</Text>
-    <Button title={reference ? "Retake reference" : "Record reference"} disabled={busy} onPress={() => record("reference")} />
-    <Button title="Measure second position" disabled={busy || !reference} onPress={() => record("trial")} />
+    <ActionButton label={reference ? "Retake reference" : "Record reference"} disabled={busy} onPress={() => record("reference")} />
+    <ActionButton label="Measure second position" disabled={busy || !reference} onPress={() => record("trial")} />
     {angle !== undefined && <Text style={{ fontSize: 36 }}>Last measurement: {angle.toFixed(1)}°</Text>}
     <Text accessibilityLiveRegion="polite">{message}</Text>
     {run && <SaveRun run={run} />}

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { AppState, Button, Text, TextInput, View } from "react-native";
+import { AppState, Text, TextInput, View } from "react-native";
 import { createInstrument, type Instrument } from "@sensor-atlas/core";
 import { bindSocket } from "@sensor-atlas/core/websocket";
-import { InstrumentPanel, RunInspector, useInstrumentRevision } from "@sensor-atlas/react-native";
+import { ActionButton, InstrumentPanel, RunInspector, useInstrumentRevision } from "@sensor-atlas/react-native";
 import { powerChannel, powerExample } from "./instruments/power";
 import { SelectionReport } from "./SelectionReport";
 import { SaveRun } from "./SavedRuns";
@@ -72,10 +72,10 @@ export function PowerScreen({ lab }: { lab: Instrument<"load"> }) {
       editable={!endpoint} style={{ padding: 12, backgroundColor: "#f1f1ee", borderRadius: 8 }} />
     <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8 }}>
       {endpoint
-        ? <Button title="Disconnect" onPress={() => { setReady(false); setMessage("Disconnected."); connect(undefined); }} />
-        : <Button title="Connect meter" onPress={open} />}
-      {!endpoint && <Button title="Load example" onPress={() => { setShowModel(true); setMessage(""); }} />}
-      {!endpoint && showModel && lab.lastRun && <Button title="Last capture" onPress={() => setShowModel(false)} />}
+        ? <ActionButton label="Disconnect" onPress={() => { setReady(false); setMessage("Disconnected."); connect(undefined); }} />
+        : <ActionButton label="Connect meter" onPress={open} />}
+      {!endpoint && <ActionButton label="Load example" onPress={() => { setShowModel(true); setMessage(""); }} />}
+      {!endpoint && showModel && lab.lastRun && <ActionButton label="Last capture" onPress={() => setShowModel(false)} />}
     </View>
     {message ? <Text accessibilityLiveRegion="polite">{message}</Text> : null}
     {invalid > 0 && <Text>{invalid} invalid frames</Text>}

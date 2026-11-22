@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { AppState, Button, View } from "react-native";
+import { AppState, View } from "react-native";
 import { createInstrument, createPendulumRun, createReplay } from "@sensor-atlas/core";
-import { InstrumentPanel, RunInspector, useInstrumentRevision } from "@sensor-atlas/react-native";
+import { ActionButton, InstrumentPanel, RunInspector, useInstrumentRevision } from "@sensor-atlas/react-native";
 import { SaveRun } from "./SavedRuns";
 
 export function PendulumScreen() {
@@ -40,8 +40,8 @@ export function PendulumScreen() {
   }
 
   return <View style={{ gap: 8 }}>
-    <Button title={playing ? "End replay" : "Replay and collect"} onPress={playing ? () => setPlaying(false) : play} />
-    {live && !playing && <Button title="Inspect original model" onPress={() => setLive(false)} />}
+    <ActionButton label={playing ? "End replay" : "Replay and collect"} onPress={playing ? () => setPlaying(false) : play} />
+    {live && !playing && <ActionButton label="Inspect original model" onPress={() => setLive(false)} />}
     {live ? <InstrumentPanel analysis="period" instrument={lab} runName="Pendulum replay" /> : <RunInspector analysis="period" run={model} />}
     <SaveRun run={live ? lab.lastRun : model} />
   </View>;
