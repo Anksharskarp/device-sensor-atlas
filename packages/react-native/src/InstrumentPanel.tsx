@@ -3,7 +3,7 @@ import { Text, View } from "react-native";
 import type { Instrument, Reading } from "@sensor-atlas/core";
 import { Button } from "./Button.js";
 import { Meter } from "./Meter.js";
-import { SampleInspector } from "./RunInspector.js";
+import { SampleInspector, type SelectionAnalysis } from "./RunInspector.js";
 import { ThresholdControls } from "./ThresholdControls.js";
 import { TracePlot } from "./TracePlot.js";
 import { layout } from "./theme.js";
@@ -27,7 +27,7 @@ export function CaptureControls<K extends string>({ instrument, runName, duratio
 
 export function InstrumentPanel<K extends string>({ instrument, runName, durationSeconds, analysis, threshold = false }: {
   threshold?: boolean;
-  analysis?: "period";
+  analysis?: SelectionAnalysis;
   instrument: Instrument<K>; runName?: string; durationSeconds?: number;
 }) {
   const revision = useInstrumentRevision(instrument);
@@ -62,7 +62,7 @@ export function InstrumentPanel<K extends string>({ instrument, runName, duratio
       {instrument.endedBy === "limit" && <Text style={layout.label}>Capture stopped at the sample limit.</Text>}
       {held ? <View style={layout.stack}>
         <Text style={layout.label}>{review ? instrument.lastRun?.name : "Frozen history"}</Text>
-        <SampleInspector analysis={analysis} key={key} readings={held} unit={unit} />
+        <SampleInspector analysis={analysis} key={key} readings={held} channelKey={key} channel={instrument.channels[key]} />
       </View> : <TracePlot readings={data} segment={segment} start={end - 15} end={end} unit={unit} />}
       <Text style={layout.label}>Live · Segment {segment} · {diagnostics.observedHz?.toFixed(1) ?? "?"} Hz · {diagnostics.outOfOrder} out of order</Text>
     </View>
