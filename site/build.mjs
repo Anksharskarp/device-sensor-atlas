@@ -8,6 +8,8 @@ import { instrumentColors } from "../packages/react-native/src/tokens.ts";
 import { project } from './config.mjs';
 import { buildGuides } from './guides.mjs';
 import { exampleLengths, modelRun, workbench } from './workbench.mjs';
+import { powerExample } from '../apps/pocket-lab/src/instruments/power.ts';
+import { inspect } from './inspect.mjs';
 import { home } from './home.mjs';
 import { page } from './layout.mjs';
 import { postDate, postList, posts } from './posts/index.mjs';
@@ -41,6 +43,9 @@ await render('workbench', { title: 'Compare recordings', current: 'Workbench', r
 for (const [index, length] of exampleLengths.entries()) {
   await writeFile(resolve(output, 'workbench', 'model-' + index + '.json'), JSON.stringify(modelRun(length)));
 }
+
+await render('workbench/inspect', { title: 'Inspect a recording', current: 'Workbench', root: '../../', body: inspect(), scripts: ['inspect.js'] });
+await writeFile(resolve(output, 'workbench/inspect/power.json'), JSON.stringify(powerExample()));
 
 await render('journal', {
   title: 'Development journal', current: 'Journal', root: '../',
