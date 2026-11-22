@@ -6,3 +6,4 @@ export { nearestSample, measureInterval } from "./measure.js";
 export { traceEnvelope } from "./envelope.js";
 export { parseRun, serializeRun, channelCsv } from "./session.js";
 export { createReplay } from "./replay.js";
+export { measurePeriod, type PeriodMeasurement, type PeriodOptions } from "./oscillation.js";
