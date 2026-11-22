@@ -1,7 +1,7 @@
 export const project = {
   name: 'Sensor Atlas',
   author: 'William Zhang',
-  description: 'Measure oscillation periods, trigger captures and compare gyroscope recordings with Sensor Atlas for React Native.',
+  description: 'Pocket Lab and the Sensor Atlas SDK measure motion, tilt and electrical energy with timestamped sensor readings.',
   repository: 'https://github.com/Anksharskarp/device-sensor-atlas',
 };
 

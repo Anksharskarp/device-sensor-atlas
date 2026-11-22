@@ -1,8 +1,8 @@
 # Sensor Atlas
 
-Sensor Atlas is a React Native SDK for motion experiments. Pocket Lab, the reference app, measures pendulum periods with a gyroscope and the angle between two stationary positions with an accelerometer. Both measurements can be reproduced from a saved session.
+Sensor Atlas is a React Native SDK for collecting timestamped readings and measuring physical quantities. Pocket Lab includes a gyroscope timer, a static tilt gauge and a wattmeter. An app can supply its own sensor stream and measurement component while using the same capture, cursor and replay controls.
 
-[Compare two recordings](https://anksharskarp.github.io/device-sensor-atlas/workbench/) · [Pendulum experiment](docs/pendulum.md) · [Static tilt](docs/tilt.md) · [Development journal](https://anksharskarp.github.io/device-sensor-atlas/journal/)
+[Inspect a recording](https://anksharskarp.github.io/device-sensor-atlas/workbench/inspect/) · [Compare periods](https://anksharskarp.github.io/device-sensor-atlas/workbench/) · [Write a measurement component](docs/custom-instruments.md)
 
 ## Run Pocket Lab
 
@@ -14,13 +14,19 @@ npm run build
 npm start -w pocket-lab
 ```
 
-Open the app in an Expo SDK 58 development build or a matching Expo Go client. Start with the bundled pendulum model. Place cursor A at the first positive peak and B at the last. The ten cycles span 12 seconds, giving an average period of 1.2 seconds. Use **Previous sample** and **Next sample** to place a cursor precisely.
+Open the app in an Expo SDK 58 development build or a matching Expo Go client. Choose **Pendulum timer** to open the bundled model. Place cursor A at the first positive peak and B at the last. The ten cycles span 12 seconds, giving an average period of 1.2 seconds. Use **Previous sample** and **Next sample** to place a cursor precisely.
 
 Choose **Replay and collect** to feed the same samples through the live panel at their original pace. For a phone reading, choose **Gyroscope**, grant motion access and select an axis.
 
 For a hands-free start, choose **Set threshold trigger**, enter a level in rad/s and arm a rising or falling crossing. **Inspect last run** reports the mean period and cycle range between the cursors.
 
 After collection, tap **Save run**. Under **Saved runs**, open the recording to inspect it, share its JSON or export a channel as CSV. A teammate can use **Import session JSON** to reopen the original readings.
+
+| Experiment | Source | Result |
+| --- | --- | --- |
+| [Pendulum timer](docs/pendulum.md) | Gyroscope or replay | Period, frequency and cycle range |
+| [Static tilt](docs/tilt.md) | Three-axis accelerometer | Angle from a stationary reference |
+| [Power meter](docs/power.md) | External wattmeter or model load | Watt-hours and time-weighted mean power |
 
 ## Embed a panel
 

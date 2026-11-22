@@ -1,5 +1,11 @@
 export const posts = [
   {
+    slug: 'a-minute-at-sixty-watts',
+    title: 'A minute at sixty watts',
+    description: 'A load cycle with a known energy budget tests the recorder outside a motion experiment.',
+    date: '2026-11-22',
+  },
+  {
     slug: 'before-the-trigger',
     title: 'What happened before the trigger?',
     description: 'Keeping the release in a gyroscope recording, down to the sample that crosses the threshold.',
