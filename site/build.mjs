@@ -5,6 +5,7 @@ import { marked } from 'marked';
 import { createPendulumRun } from '@sensor-atlas/core';
 import { project } from './config.mjs';
 import { buildGuides } from './guides.mjs';
+import { exampleLengths, modelRun, workbench } from './workbench.mjs';
 import { home } from './home.mjs';
 import { page } from './layout.mjs';
 import { postDate, postList, posts } from './posts/index.mjs';
@@ -21,6 +22,14 @@ async function render(route, content) {
 await rm(output, { recursive: true, force: true });
 await cp(resolve(site, 'assets'), resolve(output, 'assets'), { recursive: true });
 await render('.', { title: project.name, body: home(createPendulumRun()), scripts: ['cursors.js'] });
+
+await cp(resolve(site, '../packages/core/dist'), resolve(output, 'assets/core'), {
+  recursive: true, filter: path => !path.endsWith('.d.ts'),
+});
+await render('workbench', { title: 'Compare recordings', current: 'Workbench', root: '../', body: workbench(), scripts: ['compare.js'] });
+for (const [index, length] of exampleLengths.entries()) {
+  await writeFile(resolve(output, 'workbench', 'model-' + index + '.json'), JSON.stringify(modelRun(length)));
+}
 
 await render('journal', {
   title: 'Development journal', current: 'Journal', root: '../',
