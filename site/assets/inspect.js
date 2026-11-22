@@ -6,6 +6,7 @@ const cursors = [get('cursor-a'), get('cursor-b')];
 let selection;
 let trace;
 let x;
+let drawTrace;
 
 function display(number) {
   return new Intl.NumberFormat('en-US', { maximumSignificantDigits: 5 }).format(number);
@@ -47,7 +48,17 @@ function show(next) {
   for (const s of points) { min = Math.min(min, s.value); max = Math.max(max, s.value); }
   x = t => first.t === last.t ? 400 : 4 + (t - first.t) / (last.t - first.t) * 792;
   const y = v => min === max ? 90 : 5 + (max - v) / (max - min) * 170;
-  document.querySelector('#single-trace polyline').setAttribute('points', points.map(s => x(s.t) + ',' + y(s.value)).join(' '));
+  drawTrace = () => {
+    const vertices = [];
+    const hold = get('interpolation').value === 'previous';
+    for (const [i, sample] of points.entries()) {
+      const time = x(sample.t);
+      if (hold && i > 0) vertices.push(time + ',' + y(points[i - 1].value));
+      vertices.push(time + ',' + y(sample.value));
+    }
+    document.querySelector('#single-trace polyline').setAttribute('points', vertices.join(' '));
+  };
+  drawTrace();
   const dot = document.querySelector('#single-trace circle');
   dot.style.display = trace.length === 1 ? 'inline' : 'none';
   dot.removeAttribute('hidden');
@@ -65,7 +76,11 @@ function show(next) {
 }
 
 for (const input of cursors) input.oninput = measure;
-get('interpolation').onchange = measure;
+get('interpolation').onchange = () => {
+  if (!trace?.length) return;
+  drawTrace();
+  measure();
+};
 get('csv').onclick = () => {
   const { run, channel } = selection;
   const url = URL.createObjectURL(new Blob([channelCsv(run, channel)], { type: 'text/csv' }));
