@@ -17,7 +17,11 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
-    "./schema/run-v1.json": "./schema/run-v1.json"
+    "./schema/run-v1.json": "./schema/run-v1.json",
+    "./websocket": {
+      "types": "./dist/websocket.d.ts",
+      "default": "./dist/websocket.js"
+    }
   },
   "files": [
     "dist",

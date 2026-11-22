@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { createInstrument } from "../dist/index.js";
-import { bindSocket } from "../../../examples/websocket.ts";
+import { bindSocket } from "@sensor-atlas/core/websocket";
 
 test("the socket recipe reads numeric frames and marks a single disconnect", () => {
   const lab = createInstrument({ channels: { probe: { quantity: "angle", unit: "rad", clock: "board" } } });

@@ -46,7 +46,7 @@ For a sensor that sends one text frame per reading, carry time and value togethe
 {"t":12.4,"value":0.731}
 ```
 
-Copy the [WebSocket adapter](../examples/websocket.ts) into your app. The sender supplies `t` in seconds on the declared clock. If only receipt time is available, timestamp frames on arrival and declare `timestampKind: "receipt"`.
+Import `bindSocket` from `@sensor-atlas/core/websocket`. See the [probe example](../examples/websocket.ts). The sender supplies `t` in seconds on the declared clock. If only receipt time is available, timestamp frames on arrival and declare `timestampKind: "receipt"`.
 
 ```ts
 const lab = createInstrument({
