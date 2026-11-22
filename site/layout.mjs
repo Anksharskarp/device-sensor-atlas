@@ -1,6 +1,6 @@
 import { navigation, project } from './config.mjs';
 
-export function page({ title, description = project.description, root = './', current, body, scripts = [] }) {
+export function page({ title, description = project.description, root = './', current, body, scripts = [], styles = [] }) {
   const link = ([label, path]) => {
     const url = path.startsWith('https://') ? path : root + path;
     const selected = current === label ? ' aria-current="page"' : '';
@@ -15,6 +15,7 @@ export function page({ title, description = project.description, root = './', cu
 <meta name="description" content="${description}">
 <link rel="icon" href="${root}assets/mark.svg" type="image/svg+xml">
 <link rel="stylesheet" href="${root}assets/tokens.css"><link rel="stylesheet" href="${root}assets/site.css">
+${styles.map(file => `<link rel="stylesheet" href="${root}assets/${file}">`).join('')}
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>

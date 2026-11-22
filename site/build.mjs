@@ -3,6 +3,7 @@ import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { marked } from 'marked';
 import { createPendulumRun } from '@sensor-atlas/core';
+import { instrument } from './pendulum.mjs';
 import { project } from './config.mjs';
 import { buildGuides } from './guides.mjs';
 import { exampleLengths, modelRun, workbench } from './workbench.mjs';
@@ -21,7 +22,14 @@ async function render(route, content) {
 
 await rm(output, { recursive: true, force: true });
 await cp(resolve(site, 'assets'), resolve(output, 'assets'), { recursive: true });
-await render('.', { title: project.name, body: home(createPendulumRun()), scripts: ['cursors.js'] });
+await render('.', { title: project.name, body: home(), styles: ['apparatus.css'], scripts: ['apparatus.js'] });
+
+await render('experiments/ten-swings', {
+  title: 'Time ten swings', root: '../../', scripts: ['cursors.js'],
+  body: `<section class="section exercise"><p class="eyebrow">Pendulum / Cursor exercise</p>
+    <h1>Time ten swings</h1><p class="lead">Place A on the first positive peak and B on the last. Divide the elapsed time by the number of full cycles between them.</p></section>
+    ${instrument(createPendulumRun())}<p class="exercise-link"><a href="../../docs/pendulum/">Pendulum experiment guide</a></p>`,
+});
 
 await cp(resolve(site, '../packages/core/dist'), resolve(output, 'assets/core'), {
   recursive: true, filter: path => !path.endsWith('.d.ts'),

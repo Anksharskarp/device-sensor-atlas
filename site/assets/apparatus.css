@@ -1,11 +1,4 @@
 .pendulum-bench {
-  --bench-field: #202326;
-  --bench-ink: #f6f4ef;
-  --bench-muted: #c1c3c3;
-  --bench-rule: #5f6466;
-  --bench-grid: #42474a;
-  --bench-metal: #464b4e;
-  --bench-signal: #ffc570;
   margin: 0;
   min-width: 0;
   color: var(--bench-ink);
