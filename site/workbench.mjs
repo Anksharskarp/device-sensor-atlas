@@ -16,7 +16,7 @@ export function modelRun(length) {
 
 export const exampleLengths = [bench.lengths[0], bench.lengths.at(-1)];
 
-function source(label, index) {
+export function source(label, example) {
   return `<fieldset class="run-source" data-source><legend>${label}</legend>
     <p data-name></p>
     <div class="source-inputs">
@@ -24,7 +24,7 @@ function source(label, index) {
       <label>Segment <select data-segment></select></label>
     </div>
     <label class="file-label">Open session JSON <input type="file" accept=".json,application/json" data-file></label>
-    <a href="model-${index}.json" download>Download example JSON</a>
+    <a href="${example}" download>Download example JSON</a>
     <p data-error role="alert"></p>
   </fieldset>`;
 }
@@ -33,8 +33,9 @@ export function workbench() {
   return `<section class="section workbench">
     <header class="section-title"><h1>Compare recordings</h1>
     <p class="lead">The two example runs model a 40 cm and an 80 cm pendulum. To compare your own measurements, open two Pocket Lab sessions and select the oscillating axis from each. Files are read in this browser.</p></header>
+    <nav class="work-modes" aria-label="Workbench modes"><a aria-current="page" href="./">Compare periods</a><a href="inspect/">Inspect one recording</a></nav>
     <noscript>Enable JavaScript to compare the recordings.</noscript>
-    <div class="run-pair">${source('Reference', 0)}${source('Trial', 1)}</div>
+    <div class="run-pair">${source('Reference', 'model-0.json')}${source('Trial', 'model-1.json')}</div>
     <button class="button" id="reset-models">Restore examples</button>
     <p role="status" id="comparison-status"></p>
     <section id="comparison" hidden aria-label="Comparison results">

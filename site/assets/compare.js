@@ -1,8 +1,9 @@
-import { comparePeriods, parseRun, traceEnvelope } from './core/index.js';
+import { comparePeriods, traceEnvelope } from './core/index.js';
+
+import { connectSource } from './source.js';
 
 const fields = [...document.querySelectorAll('[data-source]')];
 const selections = [];
-const sequences = [0, 0];
 const view = document.querySelector('#comparison');
 const status = document.querySelector('#comparison-status');
 const text = (selector, value) => { document.querySelector(selector).textContent = value; };
@@ -56,57 +57,8 @@ function update() {
   }
 }
 
-function chooseChannel(i) {
-  const selection = selections[i];
-  if (!selection) return;
-  selection.channel = fields[i].querySelector('[data-channel]').value;
-  const segments = [...new Set(selection.run.samples[selection.channel].map(s => s.segment))];
-  const menu = fields[i].querySelector('[data-segment]');
-  menu.replaceChildren(...segments.map(n => new Option(String(n), String(n))));
-  selection.segment = segments[0];
+const resets = fields.map((field, i) => connectSource(field, 'model-' + i + '.json', selection => {
+  selections[i] = selection;
   update();
-}
-
-async function load(i, file) {
-  const sequence = ++sequences[i];
-  const field = fields[i];
-  selections[i] = undefined;
-  field.querySelector('[data-name]').textContent = file?.name ?? 'Loading example…';
-  field.querySelector('[data-error]').textContent = '';
-  field.querySelector('[data-channel]').replaceChildren();
-  field.querySelector('[data-segment]').replaceChildren();
-  update();
-  try {
-    let json;
-    if (file) json = await file.text();
-    else {
-      const response = await fetch('model-' + i + '.json');
-      if (!response.ok) throw new Error('Could not open the example recording.');
-      json = await response.text();
-    }
-    if (sequence !== sequences[i]) return;
-    const run = parseRun(json);
-    field.querySelector('[data-name]').textContent = run.name;
-    field.querySelector('[data-channel]').replaceChildren(...Object.keys(run.channels).map(key => new Option(key, key)));
-    selections[i] = { run };
-    chooseChannel(i);
-  } catch (error) {
-    if (sequence === sequences[i]) field.querySelector('[data-error]').textContent = error.message;
-  }
-}
-
-fields.forEach((field, i) => {
-  field.querySelector('[data-channel]').onchange = () => chooseChannel(i);
-  field.querySelector('[data-segment]').onchange = event => {
-    if (selections[i]) selections[i].segment = Number(event.target.value);
-    update();
-  };
-  field.querySelector('[data-file]').onchange = event => {
-    if (event.target.files[0]) load(i, event.target.files[0]);
-  };
-  load(i);
-});
-document.querySelector('#reset-models').onclick = () => fields.forEach((field, i) => {
-  field.querySelector('[data-file]').value = '';
-  load(i);
-});
+}));
+document.querySelector('#reset-models').onclick = () => resets.forEach(reset => reset());
