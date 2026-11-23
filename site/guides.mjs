@@ -11,13 +11,14 @@ function guideLink(from, to) {
 
 export async function buildGuides(repo, render) {
   const files = await readdir(resolve(repo, 'docs'), { recursive: true });
-  const sources = ['README.md', ...files.filter(file => file.endsWith('.md')).sort().map(file => join('docs', file))];
+  const rootGuides = new Map([['README.md', 'docs'], ['CONTRIBUTING.md', 'docs/contributing']]);
+  const sources = [...rootGuides.keys(), ...files.filter(file => file.endsWith('.md')).sort().map(file => join('docs', file))];
   const guides = await Promise.all(sources.map(async file => {
     const markdown = await readFile(join(repo, file), 'utf8');
     const heading = markdown.match(/^# (.+)$/m)?.[1];
     if (!heading) throw new Error(`Missing page title in ${file}`);
     const overview = file === 'README.md';
-    return { file, markdown, title: overview ? 'Overview' : heading, route: overview ? 'docs' : file.slice(0, -3) };
+    return { file, markdown, title: overview ? 'Overview' : heading, route: rootGuides.get(file) ?? file.slice(0, -3) };
   }));
   const byFile = new Map(guides.map(guide => [guide.file, guide]));
 

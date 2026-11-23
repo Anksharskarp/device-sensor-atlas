@@ -9,6 +9,7 @@ on:
       - "apps/pocket-lab/src/instruments/power.ts"
       - "docs/**"
       - "README.md"
+      - "CONTRIBUTING.md"
       - "packages/core/**"
       - "package*.json"
       - "tsconfig.base.json"

@@ -4,6 +4,8 @@ Start with a measurement someone wants to make. A useful issue might ask how to 
 
 ## Choose the right place
 
+Use the [roadmap](docs/roadmap.md) to pick an issue and find its acceptance test. Maintainers can find the publication procedures in the [SDK](docs/releases.md) and [Pocket Lab](docs/pocket-lab-distribution.md) release guides.
+
 | Where | What belongs there |
 | --- | --- |
 | [Core](packages/core) | Source clocks, buffers, capture, measurement math, session files and replay. Core runs in Node without Expo or React. |

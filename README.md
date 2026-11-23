@@ -84,7 +84,13 @@ npm run site
 
 Run `npm run check:packages` to pack the SDKs, install them in an isolated app and bundle Pocket Lab for iOS and Android.
 
-The site builds into `site/dist`. The [project plan](sensor-atlas-plan.md) describes later releases and their device acceptance tests.
+The site builds into `site/dist`.
+
+## Contribute and release
+
+Start with the [contributor guide](CONTRIBUTING.md) for setup, code and writing conventions, commits and review. The [development roadmap](docs/roadmap.md) lists open work and how to verify each milestone. The [original project brief](sensor-atlas-plan.md) describes the experiments behind it.
+
+Maintainers can follow the [SDK release guide](docs/releases.md) to rehearse, publish and verify a package release. For signed tester builds and store submissions, use the [Pocket Lab distribution guide](docs/pocket-lab-distribution.md).
 
 ## License
 
