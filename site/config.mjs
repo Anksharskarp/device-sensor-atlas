@@ -9,5 +9,4 @@ export const navigation = [
   ['Workbench', 'workbench/'],
   ['Documentation', 'docs/'],
   ['Journal', 'journal/'],
-  ['GitHub', project.repository],
 ];

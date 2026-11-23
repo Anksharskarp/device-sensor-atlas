@@ -19,7 +19,7 @@ ${styles.map(file => `<link rel="stylesheet" href="${root}assets/${file}">`).joi
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
-<header class="top"><div class="bar">${brand}<nav aria-label="Main">${navigation.map(link).join('')}</nav></div></header>
+<header class="top"><div class="bar">${brand}<nav aria-label="Main">${navigation.map(link).join('')}</nav><a class="repository" href="${project.repository}">GitHub</a></div></header>
 <main id="main" class="frame">${body}</main>
 <footer><div class="bar">${brand}<span>© ${project.author}</span></div></footer>
 ${scripts.map(script => `<script type="module" src="${root}assets/${script}"></script>`).join('')}
