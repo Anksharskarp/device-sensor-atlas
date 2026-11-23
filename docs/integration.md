@@ -15,7 +15,7 @@ In an Expo SDK 58 project using React Native 0.88.1 and React 19.3, install the 
 
 ```sh
 npx expo install react-native-svg expo-sensors
-npm install /path/to/atlas/dist/sensor-atlas-core-0.1.0-alpha.1.tgz /path/to/atlas/dist/sensor-atlas-react-native-0.1.0-alpha.1.tgz
+npm install /path/to/atlas/dist/sensor-atlas-core-0.1.0-alpha.2.tgz /path/to/atlas/dist/sensor-atlas-react-native-0.1.0-alpha.2.tgz
 ```
 
 For a development build, run `npx expo run:ios` or `npx expo run:android` after adding the sensor module. On iOS, configure the motion permission text with the Expo Sensors config plugin. Pocket Lab includes an [example configuration](../apps/pocket-lab/app.json). [Expo Gyroscope](https://docs.expo.dev/versions/latest/sdk/gyroscope/)

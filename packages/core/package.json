@@ -1,7 +1,7 @@
 {
   "name": "@sensor-atlas/core",
-  "version": "0.1.0-alpha.1",
-  "description": "Capture sensor events, compare oscillation periods and measure static tilt.",
+  "version": "0.1.0-alpha.2",
+  "description": "Record timestamped sensor readings, time oscillations, measure tilt and integrate irregular samples.",
   "author": "William Zhang",
   "license": "BSD-3-Clause",
   "repository": {

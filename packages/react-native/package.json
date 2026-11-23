@@ -1,7 +1,7 @@
 {
   "name": "@sensor-atlas/react-native",
-  "version": "0.1.0-alpha.1",
-  "description": "React Native controls for triggered captures and oscillation measurements.",
+  "version": "0.1.0-alpha.2",
+  "description": "React Native instruments for live readings, triggered capture and custom measurements between cursors.",
   "author": "William Zhang",
   "license": "BSD-3-Clause",
   "repository": {
@@ -30,7 +30,7 @@
     "prepack": "npm run build"
   },
   "peerDependencies": {
-    "@sensor-atlas/core": "0.1.0-alpha.1",
+    "@sensor-atlas/core": "0.1.0-alpha.2",
     "react": "^19.3.0",
     "react-native": "^0.88.1",
     "react-native-svg": "^15.16.0"
