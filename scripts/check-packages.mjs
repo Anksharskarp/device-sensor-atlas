@@ -40,11 +40,24 @@ try {
   }
   execFileSync(process.execPath, ["--input-type=module", "--eval", `
     import assert from "node:assert/strict";
-    import { createPendulumRun, measurePeriod, parseRun, serializeRun } from "@sensor-atlas/core";
+    import { bindSocket } from "@sensor-atlas/core/websocket";
+    import { createInstrument, createPendulumRun, integrateInterval, measurePeriod, parseRun, serializeRun } from "@sensor-atlas/core";
     const run = parseRun(serializeRun(createPendulumRun()));
     const result = measurePeriod(run.samples.rotation, { segment: 0 });
     assert.equal(result.cycles, 9);
     assert.ok(Math.abs(result.periodSeconds - 1.2) < 1e-6);
+    const meter = createInstrument({ channels: { flow: { quantity: "volumeFlow", unit: "L/min", clock: "probe" } } });
+    const socket = new EventTarget();
+    const detach = bindSocket(socket, meter, "flow", () => assert.fail("Invalid frame"));
+    meter.start("Dispensed volume");
+    for (const t of [0, 5, 20]) {
+      socket.dispatchEvent(new MessageEvent("message", { data: JSON.stringify({ t, value: 3 }) }));
+    }
+    detach();
+    const saved = parseRun(serializeRun(meter.stop()));
+    const volume = integrateInterval(saved.samples.flow, 0, 0, 20, { interpolation: "previous" });
+    assert.equal(volume.area / 60, 1);
+    assert.equal(volume.timeMean, 3);
   `], { cwd: consumer, stdio: "inherit" });
   npm(consumer, "run", "check");
   npm(consumer, "exec", "--", "expo", "export", "--platform", "ios", "--platform", "android", "--max-workers", "2");
