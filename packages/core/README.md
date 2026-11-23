@@ -19,6 +19,8 @@ Arm a rising or falling edge with `lab.arm()` to retain samples before a thresho
 
 Use `integrateInterval` for areas and time-weighted means on irregular samples. Choose linear interpolation or a previous-value hold.
 
+A WebSocket source can feed the instrument using `bindSocket` from `@sensor-atlas/core/websocket`. Each text frame contains `{"t": 1, "value": 3.6}`.
+
 Use `serializeRun` and `parseRun` to store or reopen a session. Use `channelCsv` to export a single channel.
 
 [Sensor Atlas documentation](https://anksharskarp.github.io/device-sensor-atlas/docs/)

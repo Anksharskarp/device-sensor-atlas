@@ -9,6 +9,8 @@ import { InstrumentPanel, RunInspector } from "@sensor-atlas/react-native";
 <RunInspector run={savedRun} analysis="period" />
 ```
 
+Set `analysis={IntegralReport}` to measure area and time-weighted mean for a scalar channel. Import `IntegralReport` from this package.
+
 Pass your own component to `analysis` to measure the interval in different units. Both the live panel and the recording inspector supply the same `SelectionProps`. [Custom instruments](https://anksharskarp.github.io/device-sensor-atlas/docs/custom-instruments/)
 
 The panel uses `@sensor-atlas/core` for acquisition and measurement and `react-native-svg` for plotting. Individual views include Meter, TracePlot, CaptureControls and TimeCursor.

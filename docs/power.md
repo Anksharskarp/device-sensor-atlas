@@ -22,7 +22,7 @@ npm run build
 npm run meter:example
 ```
 
-It serves one two-minute cycle per connection at `ws://127.0.0.1:8787`. For an Android Studio emulator, use `ws://10.0.2.2:8787`. For a physical phone, bind the server to the computer’s LAN address with `npm run meter:example -- --host <LAN-IP>` and enter that address on the phone. Use `wss://` for deployed instruments. Some native builds restrict plain-text connections. [React Native networking](https://reactnative.dev/docs/network)
+Use **Connect and collect** to record the complete example, starting at 0 s. The server sends one two-minute cycle per connection at `ws://127.0.0.1:8787`. For an Android Studio emulator, use `ws://10.0.2.2:8787`. For a physical phone, bind the server to the computer’s LAN address with `npm run meter:example -- --host <LAN-IP>` and enter that address on the phone. Use `wss://` for deployed instruments. Some native builds restrict plain-text connections. [React Native networking](https://reactnative.dev/docs/network)
 
 ## Read the result in your code
 

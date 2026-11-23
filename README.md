@@ -1,6 +1,6 @@
 # Sensor Atlas
 
-Sensor Atlas is a React Native SDK for collecting timestamped readings and measuring physical quantities. Pocket Lab includes a gyroscope timer, a static tilt gauge and a wattmeter. An app can supply its own sensor stream and measurement component while using the same capture, cursor and replay controls.
+Sensor Atlas is a React Native SDK for collecting timestamped readings and measuring physical quantities. Pocket Lab includes a pendulum timer, a static tilt gauge and a wattmeter. Its external probe recorder accepts other scalar sensors over WebSocket. An app can supply its own sensor stream and measurement component while using the same capture, cursor and replay controls.
 
 [Inspect a recording](https://anksharskarp.github.io/device-sensor-atlas/workbench/inspect/) · [Compare periods](https://anksharskarp.github.io/device-sensor-atlas/workbench/) · [Write a measurement component](docs/custom-instruments.md)
 
@@ -27,6 +27,8 @@ After collection, tap **Save run**. Under **Saved runs**, open the recording to 
 | [Pendulum timer](docs/pendulum.md) | Gyroscope or replay | Period, frequency and cycle range |
 | [Static tilt](docs/tilt.md) | Three-axis accelerometer | Angle from a stationary reference |
 | [Power meter](docs/power.md) | External wattmeter or model load | Watt-hours and time-weighted mean power |
+
+For a different sensor, choose **External probe**, enter its quantity, unit and source clock, then connect its WebSocket address. **Connect and collect** records from the first frame. A voltage probe, for example, can report in volts throughout capture, inspection and CSV export. [Probe setup and frame format](docs/integration.md#external-probe-in-pocket-lab)
 
 ## Embed a panel
 
@@ -65,7 +67,7 @@ Tap **Collect**, move the sensor, then tap **Stop**. **Inspect last run** opens 
 
 | Package | Contents |
 | --- | --- |
-| [@sensor-atlas/core](packages/core) | Manual, timed and threshold capture, period comparison, static tilt, session JSON and per-channel CSV |
+| [@sensor-atlas/core](packages/core) | Manual, timed and threshold capture, period comparison, static tilt, numerical integration, WebSocket input, session JSON and per-channel CSV |
 | [@sensor-atlas/react-native](packages/react-native) | InstrumentPanel, TracePlot, Meter, CaptureControls, TimeCursor and RunInspector |
 | [Pocket Lab](apps/pocket-lab) | Expo reference app built with both packages |
 

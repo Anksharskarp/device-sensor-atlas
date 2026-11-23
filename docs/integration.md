@@ -38,6 +38,14 @@ lab.gap("rotation");
 
 The [complete adapter](../apps/pocket-lab/src/gyroscope.ts) handles availability, permissions and cleanup during setup. The [experiment screen](../apps/pocket-lab/src/GyroscopeScreen.tsx) stops collection when the app enters the background. When an instrument is retired, remove its source subscriptions and call `lab.dispose()`.
 
+## External probe in Pocket Lab
+
+Open **External probe** and enter the physical quantity, unit and clock name from your source. For a voltmeter, use `voltage`, `V` and the board’s clock name. Select **Use these settings** and enter the WebSocket address.
+
+**Connect probe** starts live inspection. Press **Collect** or arm a threshold when the signal is ready. **Connect and collect** starts recording as soon as the connection opens. Each frame carries one reading in the format below. Disconnecting ends the capture, including when the source closes the socket. Tap **Save run** to keep it for later or share it under **Saved runs**.
+
+For a voltage ramp from 0 V at 0 s to 4 V at 2 s, the linear integral is 4 V·s and the time mean is 2 V. Choose **Hold previous** if the source held 0 V until the second reading. The integral is then zero. The same settings work in the [browser inspector](https://anksharskarp.github.io/device-sensor-atlas/workbench/inspect/).
+
 ## Numeric WebSocket frames
 
 For a sensor that sends one text frame per reading, carry time and value together:
