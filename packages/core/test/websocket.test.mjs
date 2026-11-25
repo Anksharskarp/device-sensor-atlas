@@ -39,3 +39,24 @@ test("batch frames validate as a unit and preserve threshold and timestamp handl
   assert.equal(invalid, 2);
   detach();
 });
+
+test("an application decoder can reject a frame and recover on the same binding", () => {
+  const lab = createInstrument({ channels: { temp: { quantity: "temperature", unit: "°C", clock: "probe" } } });
+  const socket = new EventTarget();
+  let invalid = 0;
+  const decode = data => {
+    if (data === "bad") throw new TypeError("Invalid packet");
+    return data;
+  };
+  const detach = bindSocket(socket, lab, "temp", () => invalid++, decode);
+  const send = data => socket.dispatchEvent(new MessageEvent("message", { data }));
+  send("bad");
+  send([{ t: 0, value: 7 }, { t: 1, value: NaN }]);
+  send(Array(2));
+  send({ t: 0, value: -2 });
+  assert.equal(invalid, 3);
+  assert.deepEqual(lab.readings("temp"), [{ t: 0, value: -2, segment: 0 }]);
+  detach();
+  send("bad");
+  assert.equal(invalid, 3);
+});

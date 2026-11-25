@@ -81,3 +81,23 @@ return <RunInspector run={run} />;
 ```
 
 The fixture contains ten cycles of a cosine at 50 samples per second. Use the same inspector for a saved run by passing the result of `parseRun(json)`. See [recordings and measurements](sessions.md).
+
+## Decode a probe’s own wire format
+
+Pass a synchronous decoder as the fifth argument to `bindSocket`. It receives the message’s data and returns one sample or a nonempty array on the bound channel. Convert timestamps to seconds and values to the channel’s declared unit. Throw when a packet cannot be decoded. A decoder error or invalid output calls `onInvalid` once and the next frame can still be read.
+
+The [millivolt probe decoder](../examples/millivolt-probe.ts) reads six-byte little-endian records. The first four bytes hold unsigned milliseconds on the probe clock and the last two hold signed millivolts. Set a browser socket’s binary type to receive an array buffer for each binary message. [WebSockets Standard](https://websockets.spec.whatwg.org/#dom-websocket-binarytype)
+
+```ts
+import { createInstrument } from "@sensor-atlas/core";
+import { bindSocket } from "@sensor-atlas/core/websocket";
+import { decodeMillivolts } from "./millivolt-probe.ts";
+
+const lab = createInstrument({
+  channels: { voltage: { quantity: "voltage", unit: "V", clock: "probe" } },
+});
+socket.binaryType = "arraybuffer";
+const detach = bindSocket(socket, lab, "voltage", () => console.warn("Invalid packet"), decodeMillivolts);
+```
+
+Call `lab.gap("voltage")` before writing readings after a known probe clock reset. Call `detach()` when retiring the binding.
