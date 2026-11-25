@@ -22,6 +22,16 @@ For a development build, run `npx expo run:ios` or `npx expo run:android` after 
 
 For a bare React Native 0.88.1 app on React 19.3, install `react-native-svg@15.16.0` and the same two tarballs. Run `bundle exec pod install` in the app's `ios` directory and rebuild the native app. Pass readings from your existing source to the panel. [React Native SVG installation](https://github.com/software-mansion/react-native-svg#installation)
 
+## Install core in a Node project
+
+In a separate directory with a `package.json`, install the core tarball from the checkout:
+
+```sh
+npm install /path/to/atlas/dist/sensor-atlas-core-0.1.0-alpha.2.tgz
+```
+
+Copy the [packet decoder](../examples/millivolt-probe.ts) and [voltage measurement](../examples/measure-probe.ts) into that directory. With Node.js 24 and `"type": "module"` in the project manifest, run `node measure-probe.ts`. The two readings rise from −1 V to 3 V over two seconds. Reopening the run and integrating the linear ramp gives **2 V·s over 2 s**.
+
 ## Expo Gyroscope
 
 The gyroscope provides a timestamp in seconds and angular velocity in radians per second on each device axis. Pocket Lab requests motion permission, chooses a 20 ms update interval and removes its subscription on disconnect. The interval is a request. Use the sensor's timestamp for each reading. [Expo Gyroscope](https://docs.expo.dev/versions/latest/sdk/gyroscope/)
@@ -42,7 +52,7 @@ The [complete adapter](../apps/pocket-lab/src/gyroscope.ts) handles availability
 
 Open **External probe** and enter the physical quantity, unit and clock name from your source. For a voltmeter, use `voltage`, `V` and the board’s clock name. Select **Use these settings** and enter the WebSocket address.
 
-**Connect probe** starts live inspection. Press **Collect** or arm a threshold when the signal is ready. **Connect and collect** starts recording as soon as the connection opens. Each frame carries one reading in the format below. Disconnecting ends the capture, including when the source closes the socket. Tap **Save run** to keep it for later or share it under **Saved runs**.
+**Connect probe** starts live inspection. Press **Collect** or arm a threshold when the signal is ready. **Connect and collect** starts recording as soon as the connection opens. Each frame carries one reading or a batch for the selected channel. Disconnecting ends the capture, including when the source closes the socket. Tap **Save run** to keep it for later or share it under **Saved runs**.
 
 For a voltage ramp from 0 V at 0 s to 4 V at 2 s, the linear integral is 4 V·s and the time mean is 2 V. Choose **Hold previous** if the source held 0 V until the second reading. The integral is then zero. The same settings work in the [browser inspector](https://anksharskarp.github.io/device-sensor-atlas/workbench/inspect/).
 
@@ -53,6 +63,14 @@ For a sensor that sends one text frame per reading, carry time and value togethe
 ```json
 {"t":12.4,"value":0.731}
 ```
+
+A source can also send a nonempty JSON array in acquisition order:
+
+```json
+[{"t":12.4,"value":0.731},{"t":12.5,"value":0.744}]
+```
+
+One malformed reading rejects the whole frame and calls `onInvalid` once. In a well-formed frame, duplicate and older times follow the instrument’s usual out-of-order policy. A threshold can fire between two readings in the same frame.
 
 Import `bindSocket` from `@sensor-atlas/core/websocket`. See the [probe example](../examples/websocket.ts). The sender supplies `t` in seconds on the declared clock. If only receipt time is available, timestamp frames on arrival and declare `timestampKind: "receipt"`.
 
@@ -73,3 +91,23 @@ return <RunInspector run={run} />;
 ```
 
 The fixture contains ten cycles of a cosine at 50 samples per second. Use the same inspector for a saved run by passing the result of `parseRun(json)`. See [recordings and measurements](sessions.md).
+
+## Decode a probe’s own wire format
+
+Pass a synchronous decoder as the fifth argument to `bindSocket`. It receives the message’s data and returns one sample or a nonempty array on the bound channel. Convert timestamps to seconds and values to the channel’s declared unit. Throw when a packet cannot be decoded. A decoder error or invalid output calls `onInvalid` once and the next frame can still be read.
+
+The [millivolt probe decoder](../examples/millivolt-probe.ts) reads six-byte little-endian records. The first four bytes hold unsigned milliseconds on the probe clock and the last two hold signed millivolts. Set a browser socket’s binary type to receive an array buffer for each binary message. [WebSockets Standard](https://websockets.spec.whatwg.org/#dom-websocket-binarytype)
+
+```ts
+import { createInstrument } from "@sensor-atlas/core";
+import { bindSocket } from "@sensor-atlas/core/websocket";
+import { decodeMillivolts } from "./millivolt-probe.ts";
+
+const lab = createInstrument({
+  channels: { voltage: { quantity: "voltage", unit: "V", clock: "probe" } },
+});
+socket.binaryType = "arraybuffer";
+const detach = bindSocket(socket, lab, "voltage", () => console.warn("Invalid packet"), decodeMillivolts);
+```
+
+Call `lab.gap("voltage")` before writing readings after a known probe clock reset. Call `detach()` when retiring the binding.

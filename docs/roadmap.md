@@ -4,7 +4,7 @@ The next release should let a developer install both SDKs in a fresh app, attach
 
 ## Starting point
 
-The two SDK packages are prepared as `0.1.0-alpha.2`. Core handles manual, timed and threshold capture, pre-trigger history, replay, segmented samples and numerical integration. Pocket Lab measures period, static tilt and watt-hours, records external scalar probes over WebSocket, and saves session JSON and per-channel CSV. The browser workbench inspects recordings and compares oscillation periods. CI installs packed artifacts in an isolated Expo app and exports both mobile bundles.
+The two SDK packages are prepared as `0.1.0-alpha.2`. Core handles manual, timed and threshold capture, pre-trigger history, replay, segmented samples and numerical integration. Pocket Lab measures period, static tilt and watt-hours, records external scalar probes over WebSocket, and saves session JSON and per-channel CSV. The browser workbench inspects recordings and compares oscillation periods. A [standalone Node consumer](integration.md#install-core-in-a-node-project) type-checks the packed core declarations and reproduces a 2 V·s integral from a binary probe frame. CI also installs packed artifacts in an isolated Expo app and exports both mobile bundles.
 
 The [irregular flow fixture and hand calculation](custom-instruments.md#reproduce-an-interrupted-flow-reading) exercise a custom volume report with a ten-second gap. The reproducible result is 0.600 L over nine covered seconds.
 

@@ -30,6 +30,8 @@ After collection, tap **Save run**. Under **Saved runs**, open the recording to 
 
 For a different sensor, choose **External probe**, enter its quantity, unit and source clock, then connect its WebSocket address. **Connect and collect** records from the first frame. A voltage probe, for example, can report in volts throughout capture, inspection and CSV export. [Probe setup and frame format](docs/integration.md#external-probe-in-pocket-lab)
 
+For a custom packet format, [run the standalone Node probe example](docs/integration.md#install-core-in-a-node-project) to decode millivolts, reopen a recording and reproduce its integral.
+
 ## Embed a panel
 
 Create one instrument per experiment screen. Pass source timestamps in seconds and values in the declared unit.
