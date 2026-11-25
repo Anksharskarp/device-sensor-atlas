@@ -40,12 +40,13 @@ export async function buildGuides(repo, render) {
           token.href = guideLink(guide.route, target.route) + suffix;
           return;
         }
+        const entry = statSync(join(repo, file), { throwIfNoEntry: false });
+        if (!entry) throw new Error(`Missing target in ${guide.file}: ${token.href}`);
         if (token.type === 'image') {
           token.href = `${project.repository}/raw/refs/heads/main/${file}${suffix}`;
           return;
         }
-        const directory = statSync(join(repo, file), { throwIfNoEntry: false })?.isDirectory();
-        token.href = `${project.repository}/${directory ? 'tree' : 'blob'}/main/${file}${suffix}`;
+        token.href = `${project.repository}/${entry.isDirectory() ? 'tree' : 'blob'}/main/${file}${suffix}`;
       },
       renderer: {
         heading({ tokens, depth, text }) {

@@ -15,7 +15,7 @@ export function inspect() {
         <rect id="band" y="0" height="180"/><polyline fill="none"/><circle r="3" hidden/>
         <line data-marker="a" y1="0" y2="180"/><line data-marker="b" y1="0" y2="180"/>
       </svg><div class="overlay-axis"><span id="first-time"></span><span>Source time</span><span id="last-time"></span></div></figure>
-      <div class="interval-controls">${['a','b'].map(k => `<label>Cursor ${k.toUpperCase()} <output id="label-${k}"></output><input id="cursor-${k}" type="range" min="0" step="1"></label>`).join('')}
+      <div class="interval-controls">${['a','b'].map(k => `<div class="cursor-reading"><label for="cursor-${k}">Cursor ${k.toUpperCase()}</label><output for="cursor-${k}" id="label-${k}"></output><input id="cursor-${k}" type="range" min="0" step="1"></div>`).join('')}
       <label>Interpolation<select id="interpolation"><option value="linear">Linear</option><option value="previous">Hold previous value</option></select></label></div>
       <p id="raw-stats"></p><button class="button" id="csv">Export channel CSV</button>
     </section></section>`;

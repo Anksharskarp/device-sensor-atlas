@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "name": "Intermittent flow probe",
+  "channels": {
+    "flow": { "quantity": "volumeFlow", "unit": "L/min", "clock": "pump" }
+  },
+  "samples": {
+    "flow": [
+      { "t": 0, "value": 0, "segment": 0 },
+      { "t": 2, "value": 6, "segment": 0 },
+      { "t": 5, "value": 6, "segment": 0 },
+      { "t": 15, "value": 3, "segment": 0 },
+      { "t": 19, "value": 3, "segment": 0 }
+    ]
+  }
+}

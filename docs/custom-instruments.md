@@ -15,9 +15,10 @@ function VolumeReport({ channel, readings, a, b }: SelectionProps) {
   if (channel.quantity !== "volumeFlow" || channel.unit !== "L/min") return null;
   const result = integrateInterval(readings, a.segment, a.t, b.t, {
     interpolation: "linear",
+    maxGapSeconds: 4,
   });
-  if (!result) return <Text>Select two sample times.</Text>;
-  return <Text>{(result.area / 60).toFixed(3)} L</Text>;
+  if (!result) return <Text>No covered interval.</Text>;
+  return <Text>{(result.area / 60).toFixed(3)} L over {result.coveredSeconds} s</Text>;
 }
 
 // In the experiment screen:
@@ -36,3 +37,25 @@ Keep the report in your app or export it from an ordinary React package. Pass it
 `integrateInterval` accepts any scalar channel. Specify `linear` for straight-line interpolation or `previous` to hold each reading until its successor. The function clips intervals to the requested times, returns area in channel units times seconds, and divides by covered time for the time mean. Use `maxGapSeconds` to skip intervals longer than your source can reliably cover. An empty interval or a single reading gives `null`. Negative readings retain their sign.
 
 For example, a constant 3 L/min over 20 seconds gives 60 L·s/min, or 1 L. For a channel already expressed in L/s, the integral is directly in litres.
+
+## Reproduce an interrupted flow reading
+
+The [flow fixture](../packages/core/test/fixtures/flow-gap-v1.json) contains five readings on the pump clock. For this probe, interpolate linearly across at most four seconds. The first two seconds average 3 L/min, the next three average 6 L/min, and the final four average 3 L/min. The ten seconds from 5 to 15 exceed the limit. The covered volume is (2 × 3 + 3 × 6 + 4 × 3) / 60 = **0.600 L over 9 s**.
+
+From the repository root after building core, run the fixture through the public reader and integrator:
+
+```sh
+node --input-type=module <<'JS'
+import { readFileSync } from "node:fs";
+import { integrateInterval, parseRun } from "@sensor-atlas/core";
+
+const run = parseRun(readFileSync("packages/core/test/fixtures/flow-gap-v1.json", "utf8"));
+const result = integrateInterval(run.samples.flow, 0, 0, 19, {
+  interpolation: "linear",
+  maxGapSeconds: 4,
+});
+console.log(result.area / 60, "L over", result.coveredSeconds, "s");
+JS
+```
+
+Open the same run in the custom `RunInspector` above and place the cursors at 0 and 19 seconds to reproduce the result.

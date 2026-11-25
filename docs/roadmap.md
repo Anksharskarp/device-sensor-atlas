@@ -6,6 +6,8 @@ The next release should let a developer install both SDKs in a fresh app, attach
 
 The two SDK packages are prepared as `0.1.0-alpha.2`. Core handles manual, timed and threshold capture, pre-trigger history, replay, segmented samples and numerical integration. Pocket Lab measures period, static tilt and watt-hours, records external scalar probes over WebSocket, and saves session JSON and per-channel CSV. The browser workbench inspects recordings and compares oscillation periods. CI installs packed artifacts in an isolated Expo app and exports both mobile bundles.
 
+The [irregular flow fixture and hand calculation](custom-instruments.md#reproduce-an-interrupted-flow-reading) exercise a custom volume report with a ten-second gap. The reproducible result is 0.600 L over nine covered seconds.
+
 The first npm publication, signed phone builds and hardware performance measurements are release work. The [original brief](../sensor-atlas-plan.md) sets the long-term targets. Track implementation in [GitHub Issues](https://github.com/Anksharskarp/device-sensor-atlas/issues) and link a merged change or a benchmark before marking a target complete.
 
 ## Next up: public alpha
@@ -13,8 +15,7 @@ The first npm publication, signed phone builds and hardware performance measurem
 | Work item | First contribution | Acceptance |
 | --- | --- | --- |
 | Fresh-app installation | Pack the candidate commit and install the tarballs in a separate minimal Expo app and a bare React Native app. Document the peer versions, native install steps and one sensor callback. | Another developer can build the app, feed a known signal and recover the expected result using only the public imports. Repeat against npm after publication. |
-| Reproducible fixtures | Add a small irregularly sampled flow recording with a gap and a hand calculation. Start in [core fixtures](../packages/core/test/fixtures) and the [custom instrument guide](custom-instruments.md). | A reader can identify the units, source clock, covered intervals and discarded gap. The raw JSON gives the same volume in Node and in a custom native report. |
-| Accessible inspection | Exercise the two cursors, segment selection, trigger state and export at large text sizes and with a keyboard. Track native screen-reader trials with the device work. | A user can select either endpoint, step one acquired sample and read the time, value and unit without dragging a marker. |
+| Accessible inspection | Browser cursors expose the acquired time, value and unit at each keyboard step. Check the remaining segment, trigger and export controls at large text sizes and with a keyboard. Track native screen-reader trials with the device work. | A user can select either endpoint, step one acquired sample and read the time, value and unit without dragging a marker. |
 | First npm prerelease | Confirm scope ownership, rehearse from a clean checkout, then follow the [SDK release guide](releases.md). | Both packages resolve at the same exact version from npm, a fresh consumer bundles, and the GitHub prerelease links to the artifacts and install instructions. |
 
 ## Next milestone: recordings that survive interruptions

@@ -52,6 +52,6 @@ Use the [instrument palette](packages/react-native/src/tokens.ts) across native 
 | Instrument or measurement | `npm test`. Check the expected value, units and segment against the raw fixture. |
 | Native views or Pocket Lab | `npm run build` then `npm run check -w pocket-lab`. Exercise collect, stop and reopen through the affected screen. |
 | Package surface or dependencies | `npm run check:packages`. This installs the tarballs in an isolated app and bundles iOS and Android. |
-| Docs or site | `npm run site`. Follow changed links and try the example. For interactive pages, check mobile width, keyboard use and displayed measurements. |
+| Docs or site | `npm run site`. The guide build checks relative links to repository files. Follow changed links and try the example. For interactive pages, check mobile width, keyboard use and displayed measurements. |
 
 Report exactly what ran. Record a physical device and OS only for a check performed on that device. The initial implementation phase can use fixtures and bundle checks while device trials are scheduled separately.

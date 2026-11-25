@@ -5,3 +5,5 @@ Now ask for the average value over the whole second. That question needs a model
 Sensor Atlas labels the arithmetic average as a sample mean. The interval also has a sample count, two endpoints, and a span in seconds. Those quantities let someone reading an experiment decide whether three observations are enough for the question at hand.
 
 Consider a disconnected probe. Drawing a straight line between the last value before the disconnect and the first value after reconnection quietly chooses a model for everything that happened in between. A break in the trace shows the reader exactly where those observations end and resume.
+
+A [flow recording with a quiet interval](../../docs/custom-instruments/#reproduce-an-interrupted-flow-reading) gives that choice a number. The probe reports 6 L/min at 5 seconds and 3 L/min at 15 seconds. Joining those readings with a straight line would add 0.750 L during the silence. With a four-second limit on interpolation, the report gives 0.600 L over the nine seconds the probe covers. That pair of numbers lets a reader distinguish a partial measurement from a total for the run.
