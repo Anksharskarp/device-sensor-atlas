@@ -42,7 +42,7 @@ The [complete adapter](../apps/pocket-lab/src/gyroscope.ts) handles availability
 
 Open **External probe** and enter the physical quantity, unit and clock name from your source. For a voltmeter, use `voltage`, `V` and the board’s clock name. Select **Use these settings** and enter the WebSocket address.
 
-**Connect probe** starts live inspection. Press **Collect** or arm a threshold when the signal is ready. **Connect and collect** starts recording as soon as the connection opens. Each frame carries one reading in the format below. Disconnecting ends the capture, including when the source closes the socket. Tap **Save run** to keep it for later or share it under **Saved runs**.
+**Connect probe** starts live inspection. Press **Collect** or arm a threshold when the signal is ready. **Connect and collect** starts recording as soon as the connection opens. Each frame carries one reading or a batch for the selected channel. Disconnecting ends the capture, including when the source closes the socket. Tap **Save run** to keep it for later or share it under **Saved runs**.
 
 For a voltage ramp from 0 V at 0 s to 4 V at 2 s, the linear integral is 4 V·s and the time mean is 2 V. Choose **Hold previous** if the source held 0 V until the second reading. The integral is then zero. The same settings work in the [browser inspector](https://anksharskarp.github.io/device-sensor-atlas/workbench/inspect/).
 
@@ -53,6 +53,14 @@ For a sensor that sends one text frame per reading, carry time and value togethe
 ```json
 {"t":12.4,"value":0.731}
 ```
+
+A source can also send a nonempty JSON array in acquisition order:
+
+```json
+[{"t":12.4,"value":0.731},{"t":12.5,"value":0.744}]
+```
+
+One malformed reading rejects the whole frame and calls `onInvalid` once. In a well-formed frame, duplicate and older times follow the instrument’s usual out-of-order policy. A threshold can fire between two readings in the same frame.
 
 Import `bindSocket` from `@sensor-atlas/core/websocket`. See the [probe example](../examples/websocket.ts). The sender supplies `t` in seconds on the declared clock. If only receipt time is available, timestamp frames on arrival and declare `timestampKind: "receipt"`.
 
