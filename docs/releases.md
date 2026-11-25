@@ -7,7 +7,7 @@ The checked-in workflows test the SDK and deploy Pages. Package publication, Git
 ## Prepare and rehearse
 
 1. Choose the next version and release channel. Use `alpha` for the current prereleases. The React Native package pins core exactly. Update both versions, the core peer, both Pocket Lab dependencies and the tarball filenames in the integration guide. Refresh the root lockfile and inspect the diff. The app’s store version and the recording schema have their own version numbers.
-2. Work from a clean checkout of the candidate commit using Node.js 24. Run the commands below. The package check installs its own packed SDKs in a temporary consumer, type-checks Pocket Lab and builds both native bundles. Compare output against the [roadmap](roadmap.md) for the intended milestone.
+2. Work from a clean checkout of the candidate commit using Node.js 24. Run the commands below. The package check installs its own packed SDKs in a temporary consumer, checks both SDK versions and the native core peer against Pocket Lab’s exact pins, type-checks Pocket Lab and builds both native bundles. Compare output against the [roadmap](roadmap.md) for the intended milestone.
 3. Inspect the two release archives. Check the root exports, declarations, core WebSocket entry, session schema, package READMEs, BSD licenses, author, repository and peer versions. Keep both archives and their integrity values with the release notes. Use a fresh output directory for each candidate.
 
 ```sh

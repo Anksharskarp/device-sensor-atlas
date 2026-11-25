@@ -18,6 +18,10 @@ try {
   npm(root, "run", "build");
   npm(root, "pack", "-w", "@sensor-atlas/core", "-w", "@sensor-atlas/react-native", "--pack-destination", consumer);
   const manifest = JSON.parse(readFileSync(join(app, "package.json"), "utf8"));
+  const core = "@sensor-atlas/core";
+  const native = "@sensor-atlas/react-native";
+  const version = manifest.dependencies[core];
+  assert.equal(manifest.dependencies[native], version, "Pocket Lab must pin both SDKs to the same version");
   const tarballs = readdirSync(consumer);
   for (const name of ["core", "react-native"]) {
     const file = tarballs.find(file => file.startsWith("sensor-atlas-" + name + "-") && file.endsWith(".tgz"));
@@ -35,6 +39,11 @@ try {
   for (const name of ["core", "react-native"]) {
     const installed = join(consumer, "node_modules", "@sensor-atlas", name);
     const metadata = JSON.parse(readFileSync(join(installed, "package.json"), "utf8"));
+    assert.equal(metadata.name, "@sensor-atlas/" + name);
+    assert.equal(metadata.version, version, metadata.name + " must match the Pocket Lab pin");
+    if (metadata.name === native) {
+      assert.equal(metadata.peerDependencies[core], version, "Native must pin the packed core version exactly");
+    }
     assert.equal(metadata.license, "BSD-3-Clause");
     assert.equal(readFileSync(join(installed, "LICENSE"), "utf8"), license);
   }
