@@ -63,6 +63,8 @@ export function Experiment({ subscribe }: { subscribe: Subscribe }) {
 
 Tap **Collect**, move the sensor, then tap **Stop**. **Inspect last run** opens the captured samples. **Freeze plot** holds the displayed history while acquisition continues. For setup and subscription cleanup, see the [integration guide](docs/integration.md).
 
+For a worked custom report, [measure 0.600 L from a saved flow recording](docs/custom-instruments.md#reproduce-an-interrupted-flow-reading).
+
 ## Packages
 
 | Package | Contents |
