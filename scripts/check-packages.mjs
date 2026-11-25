@@ -1,13 +1,14 @@
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
-import { cpSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const app = join(root, "apps/pocket-lab");
-const consumer = mkdtempSync(join(tmpdir(), "atlas-consumer-"));
+const scratch = mkdtempSync(join(tmpdir(), "atlas-consumer-"));
+const consumer = join(scratch, "mobile");
 const env = { ...process.env, CI: "1", EXPO_NO_TELEMETRY: "1" };
 
 function npm(cwd, ...args) {
@@ -15,6 +16,7 @@ function npm(cwd, ...args) {
 }
 
 try {
+  mkdirSync(consumer);
   npm(root, "run", "build");
   npm(root, "pack", "-w", "@sensor-atlas/core", "-w", "@sensor-atlas/react-native", "--pack-destination", consumer);
   const manifest = JSON.parse(readFileSync(join(app, "package.json"), "utf8"));
@@ -28,6 +30,23 @@ try {
     if (!file) throw new Error("Missing tarball for " + name);
     manifest.dependencies["@sensor-atlas/" + name] = "file:./" + file;
   }
+  const nodeConsumer = join(scratch, "probe");
+  mkdirSync(nodeConsumer);
+  writeFileSync(join(nodeConsumer, "package.json"), JSON.stringify({ private: true, type: "module" }));
+  const coreTarball = manifest.dependencies[core].slice("file:./".length);
+  npm(nodeConsumer, "install", "--prefer-offline", "--no-audit", "--no-fund", join(consumer, coreTarball));
+  for (const file of ["millivolt-probe.ts", "measure-probe.ts"]) {
+    cpSync(join(root, "examples", file), join(nodeConsumer, file));
+  }
+  writeFileSync(join(nodeConsumer, "tsconfig.json"), JSON.stringify({
+    compilerOptions: {
+      module: "NodeNext", target: "ES2022", strict: true, noEmit: true, allowImportingTsExtensions: true, types: [],
+    },
+  }));
+  execFileSync(process.execPath, [join(root, "node_modules/typescript/bin/tsc")], { cwd: nodeConsumer, stdio: "inherit" });
+  const measurement = execFileSync(process.execPath, ["measure-probe.ts"], { cwd: nodeConsumer, encoding: "utf8" });
+  assert.equal(measurement.trim(), "2 V·s over 2 s");
+
   const workspace = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
   manifest.devDependencies.typescript = workspace.devDependencies.typescript;
   writeFileSync(join(consumer, "package.json"), JSON.stringify(manifest));
@@ -71,5 +90,5 @@ try {
   npm(consumer, "run", "check");
   npm(consumer, "exec", "--", "expo", "export", "--platform", "ios", "--platform", "android", "--max-workers", "2");
 } finally {
-  rmSync(consumer, { recursive: true, force: true });
+  rmSync(scratch, { recursive: true, force: true });
 }

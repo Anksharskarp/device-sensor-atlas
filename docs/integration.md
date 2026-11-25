@@ -22,6 +22,16 @@ For a development build, run `npx expo run:ios` or `npx expo run:android` after 
 
 For a bare React Native 0.88.1 app on React 19.3, install `react-native-svg@15.16.0` and the same two tarballs. Run `bundle exec pod install` in the app's `ios` directory and rebuild the native app. Pass readings from your existing source to the panel. [React Native SVG installation](https://github.com/software-mansion/react-native-svg#installation)
 
+## Install core in a Node project
+
+In a separate directory with a `package.json`, install the core tarball from the checkout:
+
+```sh
+npm install /path/to/atlas/dist/sensor-atlas-core-0.1.0-alpha.2.tgz
+```
+
+Copy the [packet decoder](../examples/millivolt-probe.ts) and [voltage measurement](../examples/measure-probe.ts) into that directory. With Node.js 24 and `"type": "module"` in the project manifest, run `node measure-probe.ts`. The two readings rise from −1 V to 3 V over two seconds. Reopening the run and integrating the linear ramp gives **2 V·s over 2 s**.
+
 ## Expo Gyroscope
 
 The gyroscope provides a timestamp in seconds and angular velocity in radians per second on each device axis. Pocket Lab requests motion permission, chooses a 20 ms update interval and removes its subscription on disconnect. The interval is a request. Use the sensor's timestamp for each reading. [Expo Gyroscope](https://docs.expo.dev/versions/latest/sdk/gyroscope/)
