@@ -15,7 +15,7 @@ The first npm publication, signed phone builds and hardware performance measurem
 | Work item | First contribution | Acceptance |
 | --- | --- | --- |
 | Fresh-app installation | Pack the candidate commit and install the tarballs in a separate minimal Expo app and a bare React Native app. Document the peer versions, native install steps and one sensor callback. | Another developer can build the app, feed a known signal and recover the expected result using only the public imports. Repeat against npm after publication. |
-| Accessible inspection | Exercise the two cursors, segment selection, trigger state and export at large text sizes and with a keyboard. Track native screen-reader trials with the device work. | A user can select either endpoint, step one acquired sample and read the time, value and unit without dragging a marker. |
+| Accessible inspection | Browser cursors expose the acquired time, value and unit at each keyboard step. Check the remaining segment, trigger and export controls at large text sizes and with a keyboard. Track native screen-reader trials with the device work. | A user can select either endpoint, step one acquired sample and read the time, value and unit without dragging a marker. |
 | First npm prerelease | Confirm scope ownership, rehearse from a clean checkout, then follow the [SDK release guide](releases.md). | Both packages resolve at the same exact version from npm, a fresh consumer bundles, and the GitHub prerelease links to the artifacts and install instructions. |
 
 ## Next milestone: recordings that survive interruptions

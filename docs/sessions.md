@@ -47,7 +47,9 @@ Call `lab.gap(key)` on disconnect, clock reset or known packet loss. The next re
 
 ## Cursor readings
 
-`nearestSample(readings, segment, t)` returns the acquired sample closest to the requested time in that segment. At a tie it selects the earlier sample. Beyond either end it selects the endpoint. An empty segment returns `null`.
+`nearestSample(readings, segment, t)` returns the acquired sample closest to the requested time in that segment. At a tie it selects the earlier sample. Beyond either end it selects the endpoint. An empty segment returns `null`. In the [browser inspector](https://anksharskarp.github.io/device-sensor-atlas/workbench/inspect/), focus either cursor and press the left or right arrow to step through acquired readings. Each endpoint shows its source time, value and channel unit.
+
+![Flow recording with cursor A at 2 s and 6 L/min and cursor B at 15 s and 3 L/min](images/flow-cursors.png)
 
 `measureInterval(readings, segment, a, b)` includes both endpoints. It returns sample count, minimum, maximum, arithmetic sample mean, directed value change and seconds between the first and last included samples. An empty selection returns `null`. Measurements use one segment of one channel. Source clocks can have different origins.
 

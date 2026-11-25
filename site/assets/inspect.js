@@ -16,7 +16,8 @@ function measure() {
   if (!trace?.length) return;
   const { run, channel, segment } = selection;
   const { unit, quantity } = run.channels[channel];
-  const [a, b] = cursors.map(input => trace[Number(input.value)].t);
+  const endpoints = cursors.map(input => trace[Number(input.value)]);
+  const [a, b] = endpoints.map(sample => sample.t);
   const area = integrateInterval(trace, segment, a, b, { interpolation: get('interpolation').value });
   const stats = measureInterval(trace, segment, a, b);
   const watts = unit === 'W' && quantity === 'power';
@@ -27,12 +28,12 @@ function measure() {
   get('raw-stats').textContent = stats.count + ' samples · Min ' + display(stats.min) + ' · Max ' + display(stats.max) + ' · Sample mean ' + display(stats.sampleMean) + ' ' + unit;
   get('band').setAttribute('x', Math.min(x(a), x(b)));
   get('band').setAttribute('width', Math.abs(x(b) - x(a)));
-  [a, b].forEach((time, i) => {
+  endpoints.forEach(({ t, value }, i) => {
     const key = i ? 'b' : 'a';
-    get('label-' + key).value = display(time) + ' s';
-    cursors[i].setAttribute('aria-valuetext', display(time) + ' seconds');
+    get('label-' + key).value = t + ' s · ' + value + ' ' + unit;
+    cursors[i].setAttribute('aria-valuetext', t + ' seconds, ' + value + ' ' + unit);
     const marker = document.querySelector('[data-marker="' + key + '"]');
-    for (const attr of ['x1', 'x2']) marker.setAttribute(attr, x(time));
+    for (const attr of ['x1', 'x2']) marker.setAttribute(attr, x(t));
   });
 }
 
